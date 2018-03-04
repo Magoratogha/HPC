@@ -1,3 +1,4 @@
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -27,6 +28,7 @@ float* SumarVectores(float *v1, float *v2, int n){
 	float* vr;
 	vr = (float*)malloc(n*sizeof(float));
 
+	#pragma omp for schedule(auto)
 	for(int i=0; i<n; i++){
 		vr[i] = v1[i]+v2[i]; 
 	}
@@ -35,7 +37,7 @@ float* SumarVectores(float *v1, float *v2, int n){
 
 void llenarVectores(){
 
-	int n;
+	int n, i;
 	float* v1;
 	float* v2;
 	float* vr;
@@ -48,13 +50,11 @@ void llenarVectores(){
 	v2 = (float*)malloc(n*sizeof(float));
 
 	srand(time(NULL));
-	for(int i=0; i<n; i++){
+	for(i=0; i<n; i++){
 		v1[i] = rand(); 
-	}
-
-	for(int i=0; i<n; i++){
 		v2[i] = rand(); 
 	}
+	
 
 	/*printf("vector 1: ----------------------\n"); 
 

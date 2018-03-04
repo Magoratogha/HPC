@@ -50,9 +50,6 @@ void llenarVectores(){
 	srand(time(NULL));
 	for(int i=0; i<n; i++){
 		v1[i] = rand(); 
-	}
-
-	for(int i=0; i<n; i++){
 		v2[i] = rand(); 
 	}
 
