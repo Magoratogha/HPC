@@ -3,16 +3,18 @@
 #include <time.h>
 #include <cuda.h>
 
+__global__
+void MulMatriz(float *h_m, int fil, int col, int n){
+
+	int i = threadIdx.x + blockDim.x * blockDimIdx.x;
+	if(i<fil*col){
+		d_m[i]=d_m[i]*n;
+	} 
+}
+
+	
 int main()
 {
-	__global__
-		void MulMatriz(float *h_m, int fil, int col, int n){
-
-			int i = threadIdx.x + blockDim.x * blockDimIdx.x;
-			if(i<fil*col){
-				d_m[i]=d_m[i]*n;
-			} 
-		}
 	//Inicia reloj ------------------------
 	clock_t t_ini, t_fin;
   	double secs;
