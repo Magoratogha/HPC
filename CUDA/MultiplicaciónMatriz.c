@@ -4,12 +4,10 @@
 #include <cuda.h>
 
 __global__
-void MulMatriz(float *h_m, int fil, int col, int n){
-
+void MulMatriz(float *h_m, int fil, int col, int n)
+{
 	int i = threadIdx.x + blockDim.x * blockDimIdx.x;
-	if(i<fil*col){
-		d_m[i]=d_m[i]*n;
-	} 
+	if(i<fil*col) d_m[i] = d_m[i]*n; 
 }
 
 
