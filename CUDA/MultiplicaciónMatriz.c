@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <cuda.h>
+#include <cuda_runtime.h>
 
 __global__
 void MulMatriz(float *h_m, int fil, int col, int n)
