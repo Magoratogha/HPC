@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <cuda.h>
 
 __global__
 void MulMatriz(float *h_m, int fil, int col, int n)
