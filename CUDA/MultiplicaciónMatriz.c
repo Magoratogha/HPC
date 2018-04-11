@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-void MulMatriz(float **m, int fil, int col, int n){
+void MulMatriz(float *m, int fil, int col, int n){
 
 	for(int i=0; i<fil; i++){
     	for(int j=0; j<col; j++){
-        	m[i][j]=m[i][j]*n;
+        	m[i*col+j] = m[i*col+j]*n;
     	}
 	}
 }
@@ -21,18 +21,16 @@ int main()
   	//-------------------------------------
 
 	int fil, col;
-	float** m;
+	float* m;
 
-	fil = 5;
-	col = 6;
+	fil = 3;
+	col = 4; //con el más grande se hace la referencia para la matriz en 1D
 
-	m = (float **)malloc (fil*sizeof(float *));
-	for (int i=0; i<fil; i++)
-		m[i] = (float *) malloc (col*sizeof(float));
+	m = (float *)malloc (fil*col*sizeof(float *));
 
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			m[i][j] = 13; 
+			m[i*col+j] = 13; 
 		}
 	}
 
@@ -40,7 +38,7 @@ int main()
 
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			printf("%f ", m[i][j]);
+			printf("%f ", m[i*col+j]);
 		}
 		printf("\n"); 
 	}	
@@ -51,7 +49,7 @@ int main()
 
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			printf("%f ", m[i][j]);
+			printf("%f ", m[i*fil+j]);
 		}
 		printf("\n"); 
 	}
