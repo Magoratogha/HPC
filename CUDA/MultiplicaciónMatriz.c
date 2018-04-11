@@ -12,7 +12,7 @@ void MulMatriz(float *h_m, int fil, int col, int n){
 	} 
 }
 
-	
+
 int main()
 {
 	//Inicia reloj ------------------------
@@ -23,6 +23,7 @@ int main()
 
 	int fil, col;
 	float* h_m;
+	float* d_m;
 
 	fil = 3;
 	col = 4; //con el más grande se hace la referencia para la matriz en 1D
@@ -49,8 +50,7 @@ int main()
 	printf("\nmatriz x5: ----------------------\n"); 
 
 	//Reserva y copia de datos al dispositivo ---------
-	int size = fil*col*sizeof(float)
-	float* d_m;
+	int size = fil*col*sizeof(float);
 	cudaMalloc((void **) &d_m, size);
 	cudaMemcpy(d_m, h_m, size, cudaMemcpyHostToDevice);
 	//-------------------------------------------------
