@@ -47,12 +47,12 @@ int main()
 	h_m2 = (float*)malloc(size2);
 	h_mr = (float*)malloc(sizer);
 	cudaMalloc(&d_m1, size1);
-    cudaMalloc(&d_m2, size2);
-    cudaMalloc(&d_mr, sizer);
+	cudaMalloc(&d_m2, size2);
+	cudaMalloc(&d_mr, sizer);
 
-    int blockSize = 32;
-    dim3 dimBlock(blockSize, blockSize, 1);
-    dim3 dimGrid(ceil(col1/float(blockSize)), ceil(col1/float(blockSize)), 1);
+	int blockSize = 32;
+	dim3 dimBlock(blockSize, blockSize, 1);
+	dim3 dimGrid(ceil(col1/float(blockSize)), ceil(col1/float(blockSize)), 1);
 
 	//Iniciar matriz 1 con valor 13------------------
 	for(int i=0; i<fil1; i++){
@@ -103,8 +103,8 @@ int main()
 	//-------------------------------------
 
 	cudaFree(d_m1);
-    cudaFree(d_m2);
-    cudaFree(d_mr);
+	cudaFree(d_m2);
+	cudaFree(d_mr);
 	free(h_m1);
 	free(h_m2);
 	free(h_mr);
