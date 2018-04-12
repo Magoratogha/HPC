@@ -52,7 +52,7 @@ int main()
 	printf("\nmatriz x5: ----------------------\n"); 
 
 	cudaMemcpy(d_min, h_min, size, cudaMemcpyHostToDevice);
-	MulMatriz<<<ceil(fil*col/256.0),256>>>(h_min, fil, col); //Ejecución del kernel
+	MulMatriz<<<ceil(fil*col/256.0),256>>>(d_min, d_mout, fil, col); //Ejecución del kernel
 	cudaMemcpy(h_mout, d_mout, size, cudaMemcpyDeviceToHost); //Copia de datos al host
 	
 	//Imprimir resultados------------------
