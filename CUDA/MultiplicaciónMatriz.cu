@@ -3,11 +3,11 @@
 #include <time.h>
 #include <cuda.h>
 
-__global__
-void MulMatriz(float *d_m, int fil, int col, int n)
+__global__ void MulMatriz(float *min, float *mout, int fil, int col)
 {
-	int i = threadIdx.x + blockDim.x * blockIdx.x;
-	if(i<fil*col) d_m[i] = d_m[i]*n; 
+	int id = blockIdx.x * blockDim.x + threadIdx.x;
+	if(id < fil*col) 
+		mout[id] = min[id]*5; 
 }
 
 
@@ -20,24 +20,28 @@ int main()
   	//-------------------------------------
 
 	int fil, col;
-	float* h_m;
-	float* d_m;
+	float *h_min, *h_mout;
+	float *d_min, *d_mout;
 
 	fil = 3;
 	col = 4; //con el más grande se hace la referencia para la matriz en 1D
 
-	h_m = (float *)malloc (fil*col*sizeof(float *)); //Reserva de memoria en el host
+	int size = fil*col*sizeof(float); //tamaño en bits de cada matriz
+
+	h_min = (float*)malloc(size);
+	h_mout = (float*)malloc(size);
+	cudaMalloc(&d_min, size);
+    cudaMalloc(&d_mout, size);
 
 	//Iniciar matriz con valor 13------------------
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			h_m[i*col+j] = 13; 
+			h_min[i*col+j] = 13; 
 		}
 	}
 
 	//Imprimir resultados------------------
 	printf("matriz: ----------------------\n"); 
-
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
 			printf("%f ", h_m[i*col+j]);
@@ -47,27 +51,23 @@ int main()
 
 	printf("\nmatriz x5: ----------------------\n"); 
 
-	//Reserva y copia de datos al dispositivo ---------
-	int size = fil*col*sizeof(float);
-	cudaMalloc((void **) &d_m, size);
-	cudaMemcpy(d_m, h_m, size, cudaMemcpyHostToDevice);
-	//-------------------------------------------------
-
-	MulMatriz<<<ceil(fil*col/256.0),256>>>(d_m, fil, col, 5); //Ejecución del kernel
-
-	cudaMemcpy(h_m, d_m, size, cudaMemcpyDeviceToHost); //Copia de datos al host
-	cudaFree(d_m); //Liberar memoria del dispositivo
-
+	cudaMemcpy(d_min, h_min, size, cudaMemcpyHostToDevice);
+	MulMatriz<<<ceil(fil*col/256.0),256>>>(h_min, fil, col); //Ejecución del kernel
+	cudaMemcpy(h_mout, d_mout, size, cudaMemcpyDeviceToHost); //Copia de datos al host
+	
 	//Imprimir resultados------------------
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			printf("%f ", h_m[i*fil+j]);
+			printf("%f ", h_mout[i*fil+j]);
 		}
 		printf("\n"); 
 	}
 	//-------------------------------------
 
-	free(h_m);//Liberar memoria host
+	cudaFree(d_min);
+    cudaFree(d_mout);
+	free(h_min);
+	free(h_mout);
 
 	//Fin reloj ------------------------
   	t_fin = clock();
