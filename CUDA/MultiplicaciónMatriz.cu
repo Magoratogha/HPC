@@ -9,7 +9,7 @@ __global__ void MulMatriz(float *min, float *mout, int fil, int col)
     int j = blockIdx.x * blockDim.x + threadIdx.x;
 
     if ((i < fil) && (j < col)){
-        d_[i*col+j] = 2*mout[i*col+j]; 
+        mout[i*col+j] = 2*min[i*col+j]; 
     }
 }
 
