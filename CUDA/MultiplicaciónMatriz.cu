@@ -21,7 +21,8 @@ int main()
   	//-------------------------------------
 
 	int fil, col;
-	float* h_in, h_out;
+	float* h_in;
+	float* h_out;
 	float* d_m;
 
 	fil = 3;
