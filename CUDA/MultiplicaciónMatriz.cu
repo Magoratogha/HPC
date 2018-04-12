@@ -65,7 +65,7 @@ int main()
 	//Imprimir resultados------------------
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			printf("%f ", h_mout[i*fil+j]);
+			printf("%f ", h_mout[i*col+j]);
 		}
 		printf("\n"); 
 	}
