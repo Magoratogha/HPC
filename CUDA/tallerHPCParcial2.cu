@@ -47,10 +47,10 @@ int main()
 	float *h_m1, *h_m2, *h_mr;
 	float *d_m1, *d_m2, *d_mr;
 
-	fil1 = 5;
+	fil1 = 2;
 	col1 = 6; 
 	fil2 = 6;
-	col2 = 5; 
+	col2 = 4; 
 
 	int size1 = fil1*col1*sizeof(float); //tamaño en bits de cada matriz
 	int size2 = fil2*col2*sizeof(float);
@@ -70,14 +70,14 @@ int main()
 	//Iniciar matriz 1 con valor 13------------------
 	for(int i=0; i<fil1; i++){
 		for(int j=0; j<col1; j++){
-			h_m1[i*col1+j] = 13; 
+			h_m1[i*col1+j] = 4; 
 		}
 	}
 
 	//Iniciar matriz 2 con valor 7------------------
 	for(int i=0; i<fil2; i++){
 		for(int j=0; j<col2; j++){
-			h_m2[i*col2+j] = 7; 
+			h_m2[i*col2+j] = 8; 
 		}
 	}
 
