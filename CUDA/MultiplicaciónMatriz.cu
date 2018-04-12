@@ -54,8 +54,12 @@ int main()
 
 	printf("\nmatriz x5: ----------------------\n"); 
 
+	int blockSize = 32;
+    dim3 dimBlock(blockSize, blockSize, 1);
+    dim3 dimGrid(ceil(col/float(blockSize)), ceil(fil/float(blockSize)), 1);
+
 	cudaMemcpy(d_min, h_min, size, cudaMemcpyHostToDevice);
-	MulMatriz<<<ceil(fil*col/256.0),256>>>(d_min, d_mout, fil, col); //Ejecución del kernel
+	MulMatriz<<<dimGrid, dimBlock>>>(d_min, d_mout, fil, col); //Ejecución del kernel
 	cudaMemcpy(h_mout, d_mout, size, cudaMemcpyDeviceToHost); //Copia de datos al host
 	
 	//Imprimir resultados------------------
