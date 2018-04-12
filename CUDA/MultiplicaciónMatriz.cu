@@ -26,8 +26,8 @@ int main()
 	float *h_min, *h_mout;
 	float *d_min, *d_mout;
 
-	fil = 3;
-	col = 5; //con el más grande se hace la referencia para la matriz en 1D
+	fil = 6;
+	col = 2; //con el más grande se hace la referencia para la matriz en 1D
 
 	int size = fil*col*sizeof(float); //tamaño en bits de cada matriz
 
