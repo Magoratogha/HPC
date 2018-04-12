@@ -5,9 +5,12 @@
 
 __global__ void MulMatriz(float *min, float *mout, int fil, int col)
 {
-	int id = blockIdx.x * blockDim.x + threadIdx.x;
-	if(id < fil*col) 
-		mout[id] = min[id]*5; 
+	int i = blockIdx.y * blockDim.y + threadIdx.y;
+    int j = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if ((i < fil) && (j < col)){
+        mout[i*col+j] = 5*min[i*col+j]; 
+    }
 }
 
 
