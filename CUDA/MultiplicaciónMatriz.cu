@@ -9,7 +9,7 @@ __global__ void MulMatriz(float *min, float *mout, int fil, int col)
     int j = blockIdx.x * blockDim.x + threadIdx.x;
 
     if ((i < fil) && (j < col)){
-        mout[i*col+j] = 5*min[i*col+j]; 
+        d_[i*col+j] = 2*mout[i*col+j]; 
     }
 }
 
@@ -26,8 +26,8 @@ int main()
 	float *h_min, *h_mout;
 	float *d_min, *d_mout;
 
-	fil = 3;
-	col = 4; //con el más grande se hace la referencia para la matriz en 1D
+	fil = 15;
+	col = 15; //con el más grande se hace la referencia para la matriz en 1D
 
 	int size = fil*col*sizeof(float); //tamaño en bits de cada matriz
 
@@ -35,6 +35,10 @@ int main()
 	h_mout = (float*)malloc(size);
 	cudaMalloc(&d_min, size);
     cudaMalloc(&d_mout, size);
+
+    int blockSize = 32;
+    dim3 dimBlock(blockSize, blockSize, 1);
+    dim3 dimGrid(ceil(col/float(blockSize)), ceil(col/float(blockSize)), 1);
 
 	//Iniciar matriz con valor 13------------------
 	for(int i=0; i<fil; i++){
@@ -53,10 +57,6 @@ int main()
 	}	
 
 	printf("\nmatriz x5: ----------------------\n"); 
-
-	int blockSize = 32;
-    dim3 dimBlock(blockSize, blockSize, 1);
-    dim3 dimGrid(ceil(col/float(blockSize)), ceil(fil/float(blockSize)), 1);
 
 	cudaMemcpy(d_min, h_min, size, cudaMemcpyHostToDevice);
 	MulMatriz<<<dimGrid, dimBlock>>>(d_min, d_mout, fil, col); //Ejecución del kernel
