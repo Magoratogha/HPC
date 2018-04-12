@@ -34,8 +34,7 @@ int main()
 	//Iniciar matriz con valor 13------------------
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			h_min
-	[i*col+j] = 13; 
+			h_min[i*col+j] = 13; 
 		}
 	}
 
@@ -69,7 +68,7 @@ int main()
 	//Imprimir resultados------------------
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			printf("%f ", h_min[i*col+j]);
+			printf("%f ", h_mout[i*col+j]);
 		}
 		printf("\n"); 
 	}
