@@ -87,7 +87,7 @@ int main()
 	cudaMemcpy(d_m1, h_m1, size1, cudaMemcpyHostToDevice);
 	cudaMemcpy(d_m2, h_m2, size2, cudaMemcpyHostToDevice);
 
-	MulMatriz<<<dimGrid, dimBlock>>>(d_m1, d_m2, d_mr, fil1, col2, col1); //Ejecución del kernel
+	MulMatriz<<<dimGrid, dimBlock>>>(d_m1, d_m2, d_mr, fil1, col2, fil2); //Ejecución del kernel
 	cudaMemcpy(h_mr, d_mr, sizer, cudaMemcpyDeviceToHost); //Copia de datos al host
 	
 	//Imprimir resultados------------------
