@@ -57,17 +57,17 @@ int main()
 	MulMatriz<<<ceil(fil*col/256.0),256>>>(d_m, fil, col, 5); //Ejecución del kernel
 
 	cudaMemcpy(h_m, d_m, size, cudaMemcpyDeviceToHost); //Copia de datos al host
-	cudaFree(d_m); //Liberar memoria del dispositivo
+	//Liberar memoria del dispositivo
 
 	//Imprimir resultados------------------
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			printf("%f ", h_m[i*fil+j]);
+			printf("%f ", d_m[i*fil+j]);
 		}
 		printf("\n"); 
 	}
 	//-------------------------------------
-
+	cudaFree(d_m);
 	free(h_m);//Liberar memoria host
 
 	//Fin reloj ------------------------
