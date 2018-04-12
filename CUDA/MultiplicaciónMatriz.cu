@@ -36,6 +36,10 @@ int main()
 	cudaMalloc(&d_min, size);
     cudaMalloc(&d_mout, size);
 
+    int blockSize = 32;
+    dim3 dimBlock(blockSize, blockSize, 1);
+    dim3 dimGrid(ceil(col/float(blockSize)), ceil(col/float(blockSize)), 1);
+
 	//Iniciar matriz con valor 13------------------
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
@@ -55,7 +59,7 @@ int main()
 	printf("\nmatriz x5: ----------------------\n"); 
 
 	cudaMemcpy(d_min, h_min, size, cudaMemcpyHostToDevice);
-	MulMatriz<<<ceil((float)fil*col/256.0), 256.0>>>(d_min, d_mout, fil, col); //Ejecución del kernel
+	MulMatriz<<<dimGrid, dimBlock>>>(d_min, d_mout, fil, col); //Ejecución del kernel
 	cudaMemcpy(h_mout, d_mout, size, cudaMemcpyDeviceToHost); //Copia de datos al host
 	
 	//Imprimir resultados------------------
