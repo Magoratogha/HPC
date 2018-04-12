@@ -5,32 +5,19 @@
 
 __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,int fil2, int col2)
 {
-	/*int i = blockIdx.y * blockDim.y + threadIdx.y;
-    int j = blockIdx.x * blockDim.x + threadIdx.x;
-    int valor;
 
-    if ((i<fil) && (j<col)){
-    	valor = 0;
-    	for(int k=0; k<col; k++){
-    		valor += m1[i*col+k] * m2[k*col+j];
-    	}
-        mr[i*col+j] = valor; 
-    }*/
-
-
-
-	int i = blockIdx.y*32 + threadIdx.y;
-	int j = blockIdx.x*32 + threadIdx.x;
+	int i = blockIdx.y*blockDim.y + threadIdx.y;
+	int j = blockIdx.x*blockDim.x + threadIdx.x;
 	int valor = 0;
 
 	for (int k = 0; k<(32+col1-1)/32; k++) {
 		for (int n = 0; n<32; ++n)
-	    	if ((k*32+n < col1 && i < fil1) && (k*32 + n < fil2 && j < col2))
-	      		valor += m1[i*col1 + k*32 + n] * m2[(k*32 + n)*col2 + j];
+	    	if ((k*32+n<col1 && i<fil1) && (k*32+n < fil2&&j<col2))
+	      		valor += m1[i*col1+k*32+n]*m2[(k*32+n)*col2+j];
 	}
 
 	if (i < fil1 && j < col2)
-		mr[((blockIdx.y*blockDim.y+threadIdx.y)*col2)+(blockIdx.x*blockDim.x)+threadIdx.x]= valor;
+		mr[i*col2+j] = valor;
 
 }
 
