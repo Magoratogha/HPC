@@ -44,7 +44,7 @@ int main()
 	printf("matriz: ----------------------\n"); 
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
-			printf("%f ", h_m[i*col+j]);
+			printf("%f ", h_min[i*col+j]);
 		}
 		printf("\n"); 
 	}	
