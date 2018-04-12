@@ -3,7 +3,7 @@
 #include <time.h>
 #include <cuda.h>
 
-__global__ void MulMatriz(float *m1, float *m2, float *mr, int fil, int col, int w)
+__global__ void MulMatriz(float *m1, float *m2, float *mr, int fil, int col)
 {
 	int i = blockIdx.y * blockDim.y + threadIdx.y;
     int j = blockIdx.x * blockDim.x + threadIdx.x;
@@ -11,10 +11,10 @@ __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil, int col, int
 
     if ((i<fil) && (j<col)){
     	valor = 0;
-    	for(int k=0; k<w; k++){
-    		valor += m1[i*w+k] * m2[k*w+j];
+    	for(int k=0; k<col; k++){
+    		valor += m1[i*col+k] * m2[k*col+j];
     	}
-        mr[i*w+j] = valor; 
+        mr[i*col+j] = valor; 
     }
 }
 
@@ -87,7 +87,7 @@ int main()
 	cudaMemcpy(d_m1, h_m1, size1, cudaMemcpyHostToDevice);
 	cudaMemcpy(d_m2, h_m2, size2, cudaMemcpyHostToDevice);
 
-	MulMatriz<<<dimGrid, dimBlock>>>(d_m1, d_m2, d_mr, fil1, col2, col1); //Ejecución del kernel
+	MulMatriz<<<dimGrid, dimBlock>>>(d_m1, d_m2, d_mr, fil1, col2); //Ejecución del kernel
 	cudaMemcpy(h_mr, d_mr, sizer, cudaMemcpyDeviceToHost); //Copia de datos al host
 	
 	//Imprimir resultados------------------
