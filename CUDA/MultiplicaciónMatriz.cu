@@ -1,82 +1,85 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<malloc.h>
-#include<time.h>
-#include<cuda.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <cuda.h>
 
-__global__
-void MulMatriz(float* d_Pin, float* d_Pout, int n, int m){
-    int Row = blockIdx.y * blockDim.y + threadIdx.y;
-    int Col = blockIdx.x * blockDim.x + threadIdx.x;
+__global__ void MulMatriz(float *min, float *mout, int fil, int col)
+{
+	int i = blockIdx.y * blockDim.y + threadIdx.y;
+    int j = blockIdx.x * blockDim.x + threadIdx.x;
 
-    if ((Row < m) && (Col < n)){
-        d_Pout[Row*n+Col] = 2*d_Pin[Row*n+Col]; 
+    if ((i < fil) && (j < col)){
+        mout[i*col+j] = 2*min[i*col+j]; 
     }
 }
 
-__host__
-void print(float* M, int rows, int cols){
-    printf("-----------MATRIX ------------- \n");
-    for(int i=0; i<rows; i++){
-        for(int j=0; j<cols; j++){
-            printf("%f ", M[i * cols + j]);
-        }
-        printf("\n");
-    }
-}
 
-__host__
-void receive(float* M, int rows, int cols){
-    for(int i=0; i<rows; i++){
-        for(int j=0; j<cols; j++){
-            M[i*cols+j] = 13;
-        }
-    }
-}
+int main()
+{
+	//Inicia reloj ------------------------
+	clock_t t_ini, t_fin;
+  	double secs;
+  	t_ini = clock();
+  	//-------------------------------------
 
-int main(){
+	int fil, col;
+	float *h_min, *h_mout;
+	float *d_min, *d_mout;
 
-    float *A_in, *A_out;
-    int rowsA, colsA;    
-    
-    rowsA = 15;
-    colsA = 15;
+	fil = 15;
+	col = 15; //con el más grande se hace la referencia para la matriz en 1D
 
-    //CPU
-    A_in = (float*)malloc(rowsA * colsA * sizeof(float));
-    A_out = (float*)malloc(rowsA * colsA * sizeof(float));
+	int size = fil*col*sizeof(float); //tamaño en bits de cada matriz
 
-    receive(A_in, rowsA, colsA);
+	h_min = (float*)malloc(size);
+	h_mout = (float*)malloc(size);
+	cudaMalloc(&d_min, size);
+    cudaMalloc(&d_mout, size);
 
-    //GPU
-    cudaError_t error = cudaSuccess;
-    float *d_Ain, *d_Aout;
     int blockSize = 32;
-    //int gridSize = ceil((colsA*rowsA) / float(blockSize));
     dim3 dimBlock(blockSize, blockSize, 1);
-    dim3 dimGrid(ceil(colsA / float(blockSize)), ceil(rowsA / float(blockSize)), 1);
+    dim3 dimGrid(ceil(col/float(blockSize)), ceil(col/float(blockSize)), 1);
 
-    error = cudaMalloc((void**)&d_Ain, rowsA * colsA * sizeof(float));
-    if(error != cudaSuccess){
-        printf("Error allocating memory d_Ain");
-        return 1;
-    }
+	//Iniciar matriz con valor 13------------------
+	for(int i=0; i<fil; i++){
+		for(int j=0; j<col; j++){
+			h_min[i*col+j] = 13; 
+		}
+	}
 
-    error = cudaMalloc((void**)&d_Aout, rowsA * colsA * sizeof(float));
-    if(error != cudaSuccess){
-        printf("Error allocating memory d_Aout");
-        return 1;
-    }
+	//Imprimir resultados------------------
+	printf("matriz: ----------------------\n"); 
+	for(int i=0; i<fil; i++){
+		for(int j=0; j<col; j++){
+			printf("%f ", h_min[i*col+j]);
+		}
+		printf("\n"); 
+	}	
 
-    cudaMemcpy(d_Ain, A_in, rowsA * colsA * sizeof(float), cudaMemcpyHostToDevice);
-    MulMatriz<<<dimGrid, dimBlock>>>(d_Ain, d_Aout, rowsA, colsA);
-    cudaMemcpy(A_out, d_Aout, rowsA * colsA * sizeof(float), cudaMemcpyDeviceToHost);
+	printf("\nmatriz x5: ----------------------\n"); 
 
-    print(A_out, rowsA, colsA);
-    
-    free(A_in);
-    free(A_out);
-    cudaFree(d_Ain);
-    cudaFree(d_Aout);
-    return 0;
+	cudaMemcpy(d_min, h_min, size, cudaMemcpyHostToDevice);
+	MulMatriz<<<dimGrid, dimBlock>>>(d_min, d_mout, fil, col); //Ejecución del kernel
+	cudaMemcpy(h_mout, d_mout, size, cudaMemcpyDeviceToHost); //Copia de datos al host
+	
+	//Imprimir resultados------------------
+	for(int i=0; i<fil; i++){
+		for(int j=0; j<col; j++){
+			printf("%f ", h_mout[i*col+j]);
+		}
+		printf("\n"); 
+	}
+	//-------------------------------------
+
+	cudaFree(d_min);
+    cudaFree(d_mout);
+	free(h_min);
+	free(h_mout);
+
+	//Fin reloj ------------------------
+  	t_fin = clock();
+  	secs = (double)(t_fin - t_ini) / CLOCKS_PER_SEC;
+  	printf("Tiempo de ejecucion: %.16g milisegundos\n", secs * 1000.0);
+  	
+  	return 0;
 }
