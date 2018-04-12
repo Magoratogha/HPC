@@ -45,11 +45,11 @@ int main()
 	h_mr = (float*)malloc(sizer);
 	cudaMalloc(&d_m1, size1);
     cudaMalloc(&d_m2, size2);
-    cudaMalloc(&d_m3, sizer);
+    cudaMalloc(&d_mr, sizer);
 
     int blockSize = 32;
     dim3 dimBlock(blockSize, blockSize, 1);
-    dim3 dimGrid(ceil(col2/float(blockSize)), ceil(col/float(blockSize)), 1);
+    dim3 dimGrid(ceil(col2/float(blockSize)), ceil(col2/float(blockSize)), 1);
 
 	//Iniciar matriz 1 con valor 13------------------
 	for(int i=0; i<fil1; i++){
