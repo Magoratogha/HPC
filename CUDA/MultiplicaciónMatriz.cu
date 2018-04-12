@@ -4,7 +4,7 @@
 #include <cuda.h>
 
 __global__
-void MulMatriz(float* d_min, int fil, int col)
+void MulMatriz(float* d_min, float* d_mout, int fil, int col)
 {
 	int i = threadIdx.y + blockDim.y * blockIdx.y;
 	int j= threadIdx.x + blockDim.x * blockIdx.x;
