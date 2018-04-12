@@ -4,12 +4,12 @@
 #include <cuda.h>
 
 __global__
-void MulMatriz(float *d_m, int fil, int col, int n)
+void MulMatriz(float *d_m, int fil, int col)
 {
 	int i = threadIdx.y + blockDim.y * blockIdx.y;
 	int j= threadIdx.x + blockDim.x * blockIdx.x;
 
-	if((i<fil)&&(j<col)) d_m[i*col+j] = d_m[i*col+j]*n; 
+	if((i<fil)&&(j<col)) d_m[i*col+j] = d_m[i*col+j]*5; 
 }
 
 
@@ -55,7 +55,7 @@ int main()
 	cudaMemcpy(d_m, h_m, size, cudaMemcpyHostToDevice);
 	//-------------------------------------------------
 
-	MulMatriz<<<ceil(fil*col/256.0),256>>>(d_m, fil, col, 5); //Ejecución del kernel
+	MulMatriz<<<ceil(fil*col/256.0),256>>>(d_m, fil, col); //Ejecución del kernel
 
 	cudaMemcpy(h_m, d_m, size, cudaMemcpyDeviceToHost); //Copia de datos al host
 	cudaFree(d_m); //Liberar memoria del dispositivo
