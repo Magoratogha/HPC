@@ -50,13 +50,13 @@ void EscribirMatriz(int fil, int col, float *m) {
 
 int main(int argc, char** argv) {
 	if (argc != 2) {
-        printf("Parametros incorrectos! \n");
-        return 1;
-    }
+    	printf("Parametros incorrectos! \n");
+    	return 1;
+	}
 
 	clock_t t_ini, t_fin; //Inicia reloj ------------------------
-  	double secs;
-  	t_ini = clock();
+	double secs;
+	t_ini = clock();
 
 	int fil1, col1, fil2, col2;
 	float *h_m1, *h_m2, *h_mr;
@@ -64,10 +64,10 @@ int main(int argc, char** argv) {
 
 	FILE *archivo;
 	archivo = fopen(argv[1], "r");
-    fscanf(archivo, "%d %d", &fil1, &col1);
-    fscanf(archivo, "%d %d", &fil2, &col2);
+	fscanf(archivo, "%d %d", &fil1, &col1);
+	fscanf(archivo, "%d %d", &fil2, &col2);
 
-    if (col1 != fil2){
+	if (col1 != fil2){
 		printf("No se pueden multiplicar matrices de estas dimensiones!");
 		return 1;
 	}
