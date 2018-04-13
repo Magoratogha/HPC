@@ -22,6 +22,21 @@ __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,in
 }
 
 
+__host__
+void LeerMatriz(float* m1, float* m2, FILE* file, int fil1, int fil2, int col1, int col2){
+	
+	for(int i=0; i<fil1*col1; i++){
+		fscanf(file, "%f", &m1[i]);
+    }
+
+	for(int i=0; i<fil2*col2; i++){
+		fscanf(file, "%f", &m2[i]);
+    }
+
+	fclose(file);
+}
+
+
 int main()
 {
 	//Inicia reloj ------------------------
@@ -34,10 +49,10 @@ int main()
 	float *h_m1, *h_m2, *h_mr;
 	float *d_m1, *d_m2, *d_mr;
 
-	fil1 = 2;
-	col1 = 6; 
-	fil2 = 6;
-	col2 = 4; 
+	FILE *archivo;
+	archivo = fopen("input.txt", "r");
+    fscanf(archivo, "%d %d", &fil1, &col1);
+    fscanf(archivo, "%d %d", &fil2, &col2);
 
 	int size1 = fil1*col1*sizeof(float); //tamaño en bits de cada matriz
 	int size2 = fil2*col2*sizeof(float);
@@ -54,19 +69,7 @@ int main()
 	dim3 dimBlock(blockSize, blockSize, 1);
 	dim3 dimGrid(ceil(col1/float(blockSize)), ceil(col1/float(blockSize)), 1);
 
-	//Iniciar matriz 1 con valor 13------------------
-	for(int i=0; i<fil1; i++){
-		for(int j=0; j<col1; j++){
-			h_m1[i*col1+j] = 4; 
-		}
-	}
-
-	//Iniciar matriz 2 con valor 7------------------
-	for(int i=0; i<fil2; i++){
-		for(int j=0; j<col2; j++){
-			h_m2[i*col2+j] = 8; 
-		}
-	}
+	LeerMatriz(m1, m2, archivo, fil1, fil2, col1, col2);
 
 	//Imprimir resultados------------------
 	printf("matriz 1: ----------------------\n"); 
