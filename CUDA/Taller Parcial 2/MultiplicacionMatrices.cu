@@ -8,13 +8,12 @@ __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,in
 	int j = blockIdx.x*blockDim.x + threadIdx.x;
 	int valor = 0;
 
-	for (int k=0; k<(blockDim.y+col1-1)/blockDim.y; k++) {
-		for (int n=0; n<blockDim.y; ++n)
-	    	if ((k*blockDim.y+n<col1 && i<fil1) && (k*blockDim.y+n<fil2 && j<col2))
-	      		valor += m1[i*col1+k*blockDim.y+n]*m2[(k*blockDim.y+n)*col2+j];
+	if(i<col2 && j<fil1){
+		for(int k=0; k<fil2; k++){
+			valor += m1[j*col1+k] * m2[k*col2+i];
+		}
+		mr[j*col2+i] = valor;
 	}
-	if (i<fil1 && j<col2)
-		mr[i*col2+j] = valor;
 }
 
 
