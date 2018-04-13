@@ -68,6 +68,11 @@ int main(int argc, char** argv) {
     fscanf(archivo, "%d %d", &fil1, &col1);
     fscanf(archivo, "%d %d", &fil2, &col2);
 
+    if (col1 != fil2){
+		printf("No se pueden multiplicar matrices de estas dimensiones!");
+		return 1;
+	}
+
 	int size1 = fil1*col1*sizeof(float); //tamaño en bits de cada matriz
 	int size2 = fil2*col2*sizeof(float);
 	int sizer = fil1*col2*sizeof(float);
