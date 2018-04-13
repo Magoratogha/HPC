@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
 	cudaMemcpy(h_mr, d_mr, sizer, cudaMemcpyDeviceToHost); 
 
 	EscribirMatriz(fil1, col1, h_m1);
-	EscribirMatriz(fil2, col2, h_mr);
+	EscribirMatriz(fil2, col2, h_m2);
 	EscribirMatriz(fil1, col2, h_mr);
 
 	cudaFree(d_m1);
