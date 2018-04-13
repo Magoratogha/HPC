@@ -5,7 +5,7 @@
 #
 #SBATCH --nodes=1
 #SBATCH --time=10:00
-#SBATCH --mem-per-cpu=100
+#SBATCH --mem-per-cpu=2000
 
 ./out input.txt
 sleep 60
