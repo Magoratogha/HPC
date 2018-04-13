@@ -7,4 +7,4 @@
 #SBATCH --time=10:00
 #SBATCH --mem-per-cpu=100
 
-./out
+./out input.txt
