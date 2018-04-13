@@ -69,7 +69,7 @@ int main()
 	dim3 dimBlock(blockSize, blockSize, 1);
 	dim3 dimGrid(ceil(col1/float(blockSize)), ceil(col1/float(blockSize)), 1);
 
-	LeerMatriz(m1, m2, archivo, fil1, fil2, col1, col2);
+	LeerMatriz(h_m1, h_m2, archivo, fil1, fil2, col1, col2);
 
 	//Imprimir resultados------------------
 	printf("matriz 1: ----------------------\n"); 
