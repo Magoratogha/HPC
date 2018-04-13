@@ -35,10 +35,14 @@ __host__
 void EscribirMatriz(int fil, int col, float *m) { 
 	FILE *f = fopen("output.txt", "a"); 
 	for(int i=0; i<fil; i++){
-		for(int j=0; j<col-1; j++){
-			fprintf(f,"%f,", m[i*col+j]);
+		for(int j=0; j<col; j++){
+			if(j==col-1){
+				fprintf(f,"%f\n", m[i*col+j]); 
+			}
+			else{
+				fprintf(f,"%f,", m[i*col+j]);
+			}
 		}
-		fprintf(f,"%f\n", m[i*col+j-1]); 
 	}
 	fprintf(f, "\n");
   	fclose(f); 
