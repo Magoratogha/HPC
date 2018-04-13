@@ -5,6 +5,6 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=10:00
-#SBATCH --mem-per-cpu=100
+#SBATCH --mem-per-cpu=500
 
 ./out input.txt
