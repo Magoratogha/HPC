@@ -37,8 +37,12 @@ void LeerMatriz(float* m1, float* m2, FILE* file, int fil1, int fil2, int col1, 
 }
 
 
-int main()
+int main(int argc, char** argv)
 {
+	if (argc != 2) {
+        printf("Parametros incorrectos! \n");
+        return 1;
+    }
 	//Inicia reloj ------------------------
 	clock_t t_ini, t_fin;
   	double secs;
@@ -50,7 +54,7 @@ int main()
 	float *d_m1, *d_m2, *d_mr;
 
 	FILE *archivo;
-	archivo = fopen("input.txt", "r");
+	archivo = fopen(argv[1], "r");
     fscanf(archivo, "%d %d", &fil1, &col1);
     fscanf(archivo, "%d %d", &fil2, &col2);
 
