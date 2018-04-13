@@ -2,10 +2,8 @@
 
 #SBATCH --job-name=matrixmul
 #SBATCH --output=matrixmul.out
-#
-#SBATCH --nodes=1
-#SBATCH --time=10:00
-#SBATCH --mem-per-cpu=2000
+#SBATCH -p defq
 
+module load cuda42/toolkit
 ./out input.txt
 sleep 60
