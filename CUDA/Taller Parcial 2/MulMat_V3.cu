@@ -9,8 +9,8 @@ __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,in
 	__shared__ int m1s[TILE_DIM][TILE_DIM];
 	__shared__ int m2s[TILE_DIM][TILE_DIM];
 
-	int i = blockIdx.x * TILE_DIM + threadIdx.y; //Row
-	int j = blockIdx.y * TILE_DIM + threadIdx.x; //Col
+	int i = blockIdx.y * TILE_DIM + threadIdx.y; //Row
+	int j = blockIdx.x * TILE_DIM + threadIdx.x; //Col
 
 	int valor = 0;
 	
@@ -20,7 +20,7 @@ __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,in
 		__syncthreads();
 
 		for(int l = 0; l < TILE_DIM; ++l){
-			valor += m1s[threadIdx.y][l] * m2s[j][threadIdx.x];	    
+			valor += m1s[threadIdx.y][l] * m2s[l][threadIdx.x];	    
 		}
 		__syncthreads();
 	    }
