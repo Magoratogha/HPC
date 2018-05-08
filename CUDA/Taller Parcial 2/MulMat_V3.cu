@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <cuda.h>
-#define TILE_DIM 4
+#define TILE_DIM 32
 
 __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,int fil2, int col2) {
 	
@@ -14,18 +14,18 @@ __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,in
 
 	int valor = 0;
 	
-    for(int k = 0; k < (TILE_DIM+col1-1)/ TILE_DIM; ++k){
-		m1s[threadIdx.y][threadIdx.x] = m1[i*(TILE_DIM+col1-1) + k*TILE_DIM + threadIdx.x];
-		m2s[threadIdx.y][threadIdx.x] = m2[(k*TILE_DIM + threadIdx.y) * (TILE_DIM+col1-1) + j];
+    for(int m = 0; m < fil1/TILE_DIM; ++m){
+		m1s[threadIdx.y][threadIdx.x] = m1[i*fil1 + m*TILE_DIM + threadIdx.x];
+		m2s[threadIdx.y][threadIdx.x] = m2[(m*TILE_DIM + threadIdx.y) * fil1 + j];
 		__syncthreads();
 
-		for(int l = 0; l < TILE_DIM; ++l){
-			valor += m1s[threadIdx.y][l] * m2s[l][threadIdx.x];	    
+		for(int k = 0; k < TILE_DIM; ++k){
+			valor += m1s[threadIdx.y][k] * m2s[k][threadIdx.x];	    
 		}
 		__syncthreads();
 	    }
 	
-	mr[i*(TILE_DIM+col1-1)+j] = valor;
+	mr[i*fil1+j] = valor;
 
 }
 
