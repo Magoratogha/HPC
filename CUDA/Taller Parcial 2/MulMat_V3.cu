@@ -6,39 +6,27 @@
 
 __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,int fil2, int col2) {
 	
-	int i = blockIdx.y*TILE_DIM + threadIdx.y; // Row
-	int j = blockIdx.x*TILE_DIM + threadIdx.x; // Col
-	
+	__shared__ int m1s[TILE_DIM][TILE_DIM];
+	__shared__ int m2s[TILE_DIM][TILE_DIM];
+
+	int i = blockIdx.x; * TILE_WIDTH + threadIdx.y; //Row
+	int j = blockIdx.y; * TILE_WIDTH + threadIdx.x; //Col
+
 	int valor = 0;
+	
+    for(int k = 0; k < (TILE_DIM+col1-1)/ TILE_WIDTH; ++k){
+		m1s[threadIdx.y][threadIdx.x] = m1[i*width + k*TILE_WIDTH + threadIdx.x];
+		m2s[threadIdx.y][threadIdx.x] = m2[(k*TILE_WIDTH + threadIdx.y) * width + j];
+		__syncthreads();
 
-	__shared__ float m1s[TILE_DIM][TILE_DIM];
-    __shared__ float m2s[TILE_DIM][TILE_DIM];
-
-    for (int k = 0; k < (TILE_DIM + col1 - 1)/TILE_DIM; k++) {
-    	
-    	if (k*TILE_DIM + threadIdx.x < col1 && i < fil1){
-        	m1s[threadIdx.y][threadIdx.x] = m1[i*col1 + k*TILE_DIM + threadIdx.x];
-    	}
-        else {
-        	m1s[threadIdx.y][threadIdx.x] = 0.0;
-        }
-
-		if (k*TILE_DIM + threadIdx.y < fil2 && j < col2) {
-        	m2s[threadIdx.y][threadIdx.x] = m2[(k*TILE_DIM + threadIdx.y)*col2 + j];
+		for(int l = 0; l < TILE_WIDTH; ++l){
+			valor += m1s[threadIdx.y][l] * m2s[j][threadIdx.x];	    
 		}
-        else{
-        	m2s[threadIdx.y][threadIdx.x] = 0.0;
-        }
 		__syncthreads();
+	    }
+	
+	mr[i*width+j] = valor;
 
-        for (int n = 0; n < TILE_DIM; ++n)
-            valor += m1s[threadIdx.y][n] * m2s[n][threadIdx.x];
-		__syncthreads();
-    }
-
-    if (i < fil1 && j < col2){
-        mr[((blockIdx.y * blockDim.y + threadIdx.y)*col2) + (blockIdx.x * blockDim.x)+ threadIdx.x] = valor;
-    }
 }
 
 
