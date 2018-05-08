@@ -15,17 +15,17 @@ __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,in
 	int valor = 0;
 	
     for(int k = 0; k < (TILE_DIM+col1-1)/ TILE_WIDTH; ++k){
-		m1s[threadIdx.y][threadIdx.x] = m1[i*width + k*TILE_WIDTH + threadIdx.x];
-		m2s[threadIdx.y][threadIdx.x] = m2[(k*TILE_WIDTH + threadIdx.y) * width + j];
+		m1s[threadIdx.y][threadIdx.x] = m1[i*(TILE_DIM+col1-1) + k*TILE_DIM + threadIdx.x];
+		m2s[threadIdx.y][threadIdx.x] = m2[(k*TILE_DIM + threadIdx.y) * (TILE_DIM+col1-1) + j];
 		__syncthreads();
 
-		for(int l = 0; l < TILE_WIDTH; ++l){
+		for(int l = 0; l < TILE_DIM; ++l){
 			valor += m1s[threadIdx.y][l] * m2s[j][threadIdx.x];	    
 		}
 		__syncthreads();
 	    }
 	
-	mr[i*width+j] = valor;
+	mr[i*(TILE_DIM+col1-1)+j] = valor;
 
 }
 
