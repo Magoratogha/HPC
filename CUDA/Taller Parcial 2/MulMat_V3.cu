@@ -4,16 +4,40 @@
 #include <cuda.h>
 
 __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,int fil2, int col2) {
-	int i = blockIdx.y*blockDim.y + threadIdx.y;
-	int j = blockIdx.x*blockDim.x + threadIdx.x;
+	
+	int i = blockIdx.y*TILE_DIM + threadIdx.y; // Row
+	int j = blockIdx.x*TILE_DIM + threadIdx.x; // Col
+	
 	int valor = 0;
 
-	if(i<col2 && j<fil1){
-		for(int k=0; k<fil2; k++){
-			valor += m1[j*col1+k] * m2[k*col2+i];
+	__shared__ float m1s[TILE_DIM][TILE_DIM];
+    __shared__ float m2s[TILE_DIM][TILE_DIM];
+
+    for (int k = 0; k < (TILE_DIM + col1 - 1)/TILE_DIM; k++) {
+    	
+    	if (k*TILE_DIM + threadIdx.x < col1 && i < fil1){
+        	m1s[threadIdx.y][threadIdx.x] = m1[i*col1 + k*TILE_DIM + threadIdx.x];
+    	}
+        else {
+        	m1s[threadIdx.y][threadIdx.x] = 0.0;
+        }
+
+		if (k*TILE_DIM + threadIdx.y < fil2 && j < col2) {
+        	m2s[threadIdx.y][threadIdx.x] = m2[(k*TILE_DIM + threadIdx.y)*col2 + j];
 		}
-		mr[j*col2+i] = valor;
-	}
+        else{
+        	m2s[threadIdx.y][threadIdx.x] = 0.0;
+        }
+		__syncthreads();
+
+        for (int n = 0; n < TILE_DIM; ++n)
+            valor += m1s[threadIdx.y][n] * m2s[n][threadIdx.x];
+		__syncthreads();
+    }
+
+    if (Row < CRows && Col < CCols){
+        mr[((blockIdx.y * blockDim.y + threadIdx.y)*col2) + (blockIdx.x * blockDim.x)+ threadIdx.x] = valor;
+    }
 }
 
 
