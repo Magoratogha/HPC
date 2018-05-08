@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <cuda.h>
+#define TILE_DIM 16
 
 __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,int fil2, int col2) {
 	
@@ -35,7 +36,7 @@ __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,in
 		__syncthreads();
     }
 
-    if (Row < CRows && Col < CCols){
+    if (i < fil1 && j < col2){
         mr[((blockIdx.y * blockDim.y + threadIdx.y)*col2) + (blockIdx.x * blockDim.x)+ threadIdx.x] = valor;
     }
 }
