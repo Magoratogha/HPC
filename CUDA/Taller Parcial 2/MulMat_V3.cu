@@ -6,27 +6,44 @@
 
 __global__ void MulMatriz(float *m1, float *m2, float *mr, int fil1, int col1,int fil2, int col2) {
 	
-	__shared__ int m1s[TILE_DIM][TILE_DIM];
-	__shared__ int m2s[TILE_DIM][TILE_DIM];
+	int i = blockIdx.y*TILE_DIM + threadIdx.y; // Row
+	int j = blockIdx.x*TILE_DIM + threadIdx.x; // Col
 
-	int i = blockIdx.y * TILE_DIM + threadIdx.y; //Row
-	int j = blockIdx.x * TILE_DIM + threadIdx.x; //Col
+	__shared__ float m1s[TILE_DIM][TILE_DIM];
+	__shared__ float m2s[TILE_DIM][TILE_DIM];
 
 	int valor = 0;
 	
-    for(int m = 0; m < fil1/TILE_DIM; ++m){
-		m1s[threadIdx.y][threadIdx.x] = m1[i*fil1 + m*TILE_DIM + threadIdx.x];
-		m2s[threadIdx.y][threadIdx.x] = m2[(m*TILE_DIM + threadIdx.y) * fil1 + j];
+    int n = 0, m = 0;
+    while(m < gridDim.x && n < gridDim.y){
+
+		if(((m*TILE_DIM) + threadIdx.x)<col1 && i<fil1) {
+			m1s[threadIdx.y][threadIdx.x] = m1[(i*col1) + ((m*TILE_DIM) + threadIdx.x)];
+		}
+		else {
+			m1s[threadIdx.y][threadIdx.x] = 0;
+		}
+		
+		if((n*TILE_DIM + threadIdx.y)<fil2 && j<col2) {
+			m2s[threadIdx.y][threadIdx.x] = m2[((n*TILE_DIM + threadIdx.y)*col2) + j];
+		}
+		else {
+			m2s[threadIdx.y][threadIdx.x] = 0;
+		}
+		m++; 
+		n++;
+
 		__syncthreads();
 
-		for(int k = 0; k < TILE_DIM; ++k){
-			valor += m1s[threadIdx.y][k] * m2s[k][threadIdx.x];	    
+		for (int k=0; k < TILE_DIM ; k++) {
+			valor += m1s[threadIdx.y][k]*m2s[k][threadIdx.x];
 		}
 		__syncthreads();
-	    }
-	
-	mr[i*fil1+j] = valor;
+	}
 
+	if(i<fil1 && j<col2) {
+		mr[(i*col2) + j] = valor;
+	}
 }
 
 
