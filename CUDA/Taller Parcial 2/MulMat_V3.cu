@@ -62,7 +62,7 @@ void LeerMatriz(float* m1, float* m2, FILE* file, int fil1, int fil2, int col1, 
 
 __host__
 void EscribirMatriz(int fil, int col, float *m) { 
-	FILE *f = fopen("output.txt", "a"); 
+	FILE *f = fopen("outputSH.txt", "a"); 
 	for(int i=0; i<fil; i++){
 		for(int j=0; j<col; j++){
 			if(j==col-1){
