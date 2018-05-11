@@ -36,7 +36,7 @@ Y se usaron también, 3 tipos de entradas diferentes:
 
 ## CPU's y GPU's:
 
-Los algoritmos fueron probados y ejecutados a través de **SLURM** solicitando **1GB de memoria RAM** y un único nodo, con las siguientes especificaciones:
+Los algoritmos fueron probados y ejecutados en un clúster a través de la herramienta **SLURM** solicitando **1GB** de memoria RAM y un único nodo, con las siguientes especificaciones:
 
 ### CPU:
 
@@ -47,3 +47,5 @@ Core i7
 Nvidia GTX 980
 
 Nvidia GTX 780
+
+Las implementaciones realizadas, se ejecutaron de manera independiente en cada GPU.
