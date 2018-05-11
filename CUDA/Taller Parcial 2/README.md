@@ -91,10 +91,10 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 
 ### Ejecución en GTX 780 vs CPU
 #### Input Short
-![Input Short](/ruta/a/la/imagen.jpg)
+![Input Short](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/780short.jpeg)
 #### Input Medium
-![Input Medium](/ruta/a/la/imagen.jpg)
+![Input Medium](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/780medium.jpeg)
 #### Input Long
-![Input Long](/ruta/a/la/imagen.jpg)
+![Input Long](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/980long.jpeg)
 
 ## Conclusiones:
