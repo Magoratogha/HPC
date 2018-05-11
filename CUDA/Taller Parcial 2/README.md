@@ -1,5 +1,7 @@
 # Taller Parcial 2
-High Performance Computing
+High Performance Computing.
+Realizado por: Santiago Gómez Grajales - Juan Pablo Tabares Rico. 
+UTP, 2018
 
 ## Enunciado:
 
@@ -40,12 +42,12 @@ Los algoritmos fueron probados y ejecutados en un clúster a través de la herra
 
 ### CPU:
 
-Core i7
+**Core i7**
 
 ### GPU's
 
-Nvidia GTX 980
+**Nvidia GTX 980**
 
-Nvidia GTX 780
+**Nvidia GTX 780**
 
 Las implementaciones realizadas, se ejecutaron de manera independiente en cada GPU.
