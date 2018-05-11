@@ -95,6 +95,6 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 #### Input Medium
 ![Input Medium](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/780medium.jpeg)
 #### Input Long
-![Input Long](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/980long.jpeg)
+![Input Long](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/780long.jpeg)
 
 ## Conclusiones:
