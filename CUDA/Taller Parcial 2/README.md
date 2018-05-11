@@ -76,7 +76,7 @@ Los algoritmos fueron probados y ejecutados en un clúster a través de la herra
 - L2 Cache: 1536KB
 - Manufacturing Process: 28-nm
 
-Las implementaciones realizadas, se ejecutaron de manera independiente en cada GPU.
+Las implementaciones realizadas, se ejecutaron de manera independiente en cada GPU. Se realizaron en total 10 ejecuciones por cada prueba y en las gráficas se evidencia el valor promedio de los resultados.
 
 
 ## Análisis de los resultados:
@@ -106,10 +106,9 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 
 ## Conclusiones:
 - El aceleramiento es más evidente cuando se requiere más procesamiento de los datos, esto podemos apreciarlo en los las gráficas cuando comparamos los datos de entrada. A medida que el input aumenta su tamaño, el salto entre los tiempos de CPU y GPU es más notorio.
-- Cuando comparamos el rendimiento de las GPUs, vemos que la GTX980 es superior a la GTX780. Aunque hay características que sobresalen tanto en una como en la otra, la característica que más influye en el rendimiento es el número de Stream Multiprocessors, debido a que si se tiene un número mayor de SM se tiene un acceso más recurrente a la memoria compartida.
-- 
--
--
--
--
--
+- En terminos de porcentajes, la aceleración general fue:
+1. Con un Input Short: Ingenuo (**45,82%**), SH (**52,26%**)
+2. Con un Input Medium: Ingenuo (**75,51%**), SH (**79,7%**)
+3. Con un Input Long: Ingenuo (**86,61%**), SH (**89,69%**)
+- Cuando comparamos el rendimiento de las GPUs, vemos que la GTX980 es superior a la GTX780. Aunque hay características que sobresalen tanto en una como en la otra, la característica que más influye en el rendimiento es el número de Stream Multiprocessors, debido a que si se tiene un número mayor de SM se tiene más memoria compartida diponible para el cómputo.
+- Si comparamos el algoritmo ingenuo contra el que hace uso de la memoria compartida, podemos ver que la diferencia entre ambos radica principalmente en la cantidad de memoria compartida que se tenga disponible a la hora del cómputo. Como ejemplo, vemos que la GTX980 al tener una mayor disponibilidad en memoria compartida realiza una optimización más notoria que la GTX780 cuando se ejecuta el algoritmo de memoria compartida frente al ingenuo.
