@@ -18,16 +18,32 @@ High Performance Computing
 13. El resultado de esta implementación debe mostrar una aceleración del algoritmo.
 14. El algoritmo debe multiplicar bien. **SÚPER IMPORTANTE.**
 
+
 ## Implementación:
 
 Para la construcción de este taller se realizaron 3 implementaciones diferentes de un mismo algoritmo para la multiplicación de dos matrices, estos algoritmos fueron:
 
 - MulMat_V1.c [Versión sin optimizar, algoritmo secuencial]
 - MulMat_V2.cu [Versión paralela optimizada con CUDA, algoritmo ingenuo]
-- MulMat_V3.cu [Versión paralela optimizada con CUDA, algoritmo haciendo uso de la memoria compartida]
+- MulMat_V3.cu [Versión paralela optimizada con CUDA, algoritmo haciendo uso de memoria compartida]
 
 Y se usaron también, 3 tipos de entradas diferentes:
 
 - input-short.txt [2 Matrices de 400x400]
 - input-medium.txt [2 Matrices de 1000x1000]
 - input-long.txt [2 Matrices de 2000x2000]
+
+
+## CPU's y GPU's:
+
+Los algoritmos fueron probados y ejecutados a través de **SLURM** solicitando **1GB de memoria RAM** y un único nodo, con las siguientes especificaciones:
+
+### CPU:
+
+Core i7
+
+### GPU's
+
+Nvidia GTX 980
+
+Nvidia GTX 780
