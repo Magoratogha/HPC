@@ -100,7 +100,7 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 ### Comparativa GTX980 y GTX780 frente a la CPU:
 #### Rendimiento general GTX980
 ![Input Long](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/980vsCPU.PNG)
-#### Rendimiento general GTX789
+#### Rendimiento general GTX780
 ![Input Long](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/780vsCPU.PNG)
 
 
