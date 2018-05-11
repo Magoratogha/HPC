@@ -54,6 +54,26 @@ Los algoritmos fueron probados y ejecutados en un clúster a través de la herra
 
 **Nvidia GTX 980**
 
+- Memoria: 4096 MB GDDR5
+- SMs: 16
+- CUDA Cores: 2048
+- Frecuencia máxima: 1216 MHz
+- Floating-point performance: 4981 GFLOPs
+- Memory Clock: 7000 MHz
+- Memory Bandwidth: 224 GB/sec
+- L2 Cache: 2048KB
+- Manufacturing Process: 28-nm
+
 **Nvidia GTX 780**
+
+- Memoria: 3072 MB GDDR5
+- SMs: 12
+- CUDA Cores: 2304
+- Frecuencia máxima: 900 MHz
+- Floating-point performance: 3977 GFLOPs
+- Memory Clock: 6000 MHz
+- Memory Bandwidth: 288 GB/sec
+- L2 Cache: 1536KB
+- Manufacturing Process: 28-nm
 
 Las implementaciones realizadas, se ejecutaron de manera independiente en cada GPU.
