@@ -1,7 +1,7 @@
 # Taller Parcial 2
 High Performance Computing
 
-##Enunciado:
+**Enunciado:**
 
 1. A partir de la construcción de la primera parte del Parcial 2 se deberá construir un programa que haga uso de Memoria Compartida, como se vió en clase.
 2. Se deberán presentar gráficas comparativas de tiempos de ejecución entre los algoritmos, sin aceleración, la implementación ingenua y la implementación con memoria compartida.
