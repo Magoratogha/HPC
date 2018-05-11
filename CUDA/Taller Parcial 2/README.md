@@ -83,11 +83,11 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 
 ### Ejecución en GTX 980 vs CPU
 #### Input Short (Tiempo en milisegundos)
-![Input Short](/files/980short.jpeg)
+![Input Short](/980short.jpeg)
 #### Input Medium (Tiempo en milisegundos)
-![Input Medium](/files/980medium.jpeg)
+![Input Medium](/980medium.jpeg)
 #### Input Long (Tiempo en milisegundos)
-![Input Long](/files/980long.jpeg)
+![Input Long](/980long.jpeg)
 
 ### Ejecución en GTX 780 vs CPU
 #### Input Short
