@@ -42,7 +42,12 @@ Los algoritmos fueron probados y ejecutados en un clúster a través de la herra
 
 ### CPU:
 
-**Core i7**
+**Intel Core i7-4790K:**
+Cantidad de núcleos: 4
+Cantidad de subprocesos: 8
+Frecuencia máxima del procesador: 4,40 GHz
+Cache L2: 1 MB
+Cache L3: 8 MB
 
 ### GPU's
 
