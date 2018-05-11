@@ -25,3 +25,9 @@ Para la construcción de este taller se realizaron 3 implementaciones diferentes
 - MulMat_V1.c [Versión sin optimizar, algoritmo secuencial]
 - MulMat_V2.cu [Versión paralela optimizada con CUDA, algoritmo ingenuo]
 - MulMat_V3.cu [Versión paralela optimizada con CUDA, algoritmo haciendo uso de la memoria compartida]
+
+Y se usaron también, 3 tipos de entradas diferentes:
+
+- input-short.txt [2 Matrices de 400x400]
+- input-medium.txt [2 Matrices de 1000x1000]
+- input-long.txt [2 Matrices de 2000x2000]
