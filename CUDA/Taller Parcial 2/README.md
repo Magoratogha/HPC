@@ -105,7 +105,7 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 
 
 ## Conclusiones:
-- El aceleramiento es más evidente cuando se requiere más procesamiento de los datos, esto podemos apreciarlo en los las gráficas cuando comparamos los datos de entrada. A medida que el input aumenta su tamaño, el salto entre los tiempos de CPU y GPU es más notorio.
+- El aceleramiento es más evidente cuando se requiere más procesamiento de los datos, esto podemos apreciarlo en las gráficas cuando comparamos los datos de entrada. A medida que el input aumenta su tamaño, el salto entre los tiempos de CPU y GPU es más notorio.
 - En terminos de porcentajes, la aceleración general fue:
 1. Con un Input Short: Ingenuo (**45,82%**), SH (**52,26%**)
 2. Con un Input Medium: Ingenuo (**75,51%**), SH (**79,7%**)
