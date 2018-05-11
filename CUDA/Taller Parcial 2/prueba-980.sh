@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=MatrixMul
-#SBATCH --output=MatrixMul-long.out
+#SBATCH --output=MatrixMul-980-long.out
 #SBATCH --ntasks=1
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
