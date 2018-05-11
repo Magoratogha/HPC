@@ -83,11 +83,11 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 
 ### Ejecución en GTX 980 vs CPU
 #### Input Short (Tiempo en milisegundos)
-![Input Short](/980short.jpeg)
+![Input Short](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/980short.jpeg)
 #### Input Medium (Tiempo en milisegundos)
-![Input Medium](/980medium.jpeg)
+![Input Medium](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/980medium.jpeg)
 #### Input Long (Tiempo en milisegundos)
-![Input Long](/980long.jpeg)
+![Input Long](https://raw.githubusercontent.com/Magoratogha/HPC/master/CUDA/Taller%20Parcial%202/Files/980short.jpeg)
 
 ### Ejecución en GTX 780 vs CPU
 #### Input Short
