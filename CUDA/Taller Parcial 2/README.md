@@ -105,9 +105,9 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 
 
 ## Conclusiones:
-- El aceleramiento es más evidente cuando se requiere más procesamiento de los datos, esto podemos apreciarlo en los las graficas cuando comparamos los datos de entrada. A medida que el input aumenta su tamaño, el salto entre los tiempos de CPU y GPU es más notorio.
-- Cuando comparamos el rendimiento de las GPUs, vemos que la GTX980 es superior a la GTX780
--
+- El aceleramiento es más evidente cuando se requiere más procesamiento de los datos, esto podemos apreciarlo en los las gráficas cuando comparamos los datos de entrada. A medida que el input aumenta su tamaño, el salto entre los tiempos de CPU y GPU es más notorio.
+- Cuando comparamos el rendimiento de las GPUs, vemos que la GTX980 es superior a la GTX780. Aunque hay características que sobresalen tanto en una como en la otra, la característica que más influye en el rendimiento es el número de Stream Multiprocessors, debido a que si se tiene un número mayor de SM se tiene un acceso más recurrente a la memoria compartida.
+- 
 -
 -
 -
