@@ -1,6 +1,8 @@
 # Taller Parcial 2
 High Performance Computing.
+
 Realizado por: Santiago Gómez Grajales - Juan Pablo Tabares Rico. 
+
 UTP, 2018
 
 ## Enunciado:
