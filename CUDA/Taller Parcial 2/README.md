@@ -77,3 +77,16 @@ Los algoritmos fueron probados y ejecutados en un clúster a través de la herra
 - Manufacturing Process: 28-nm
 
 Las implementaciones realizadas, se ejecutaron de manera independiente en cada GPU.
+
+
+## Análisis de los resultados:
+
+### Ejecución en GTX 980 vs CPU
+#### Input Short
+#### Input Medium
+#### Input Long
+
+### Ejecución en GTX 780 vs CPU
+#### Input Short
+#### Input Medium
+#### Input Long
