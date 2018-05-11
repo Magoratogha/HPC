@@ -17,3 +17,11 @@ High Performance Computing
 12. Todas las implementaciones deberán ejecutarse mínimo 10 veces para garantizar un tiempo y cálculo de aceleración promedio que servirá como insumo para la construcción de las gráficas.
 13. El resultado de esta implementación debe mostrar una aceleración del algoritmo.
 14. El algoritmo debe multiplicar bien. **SÚPER IMPORTANTE.**
+
+## Implementación:
+
+Para la construcción de este taller se realizaron 3 implementaciones diferentes de un mismo algoritmo para la multiplicación de dos matrices, estos algoritmos fueron:
+
+- MulMat_V1.c [Versión sin optimizar, algoritmo secuencial]
+- MulMat_V2.cu [Versión paralela optimizada con CUDA, algoritmo ingenuo]
+- MulMat_V3.cu [Versión paralela optimizada con CUDA, algoritmo haciendo uso de la memoria compartida]
