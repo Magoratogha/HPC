@@ -50,7 +50,7 @@ Los algoritmos fueron probados y ejecutados en un clúster a través de la herra
 - Cache L2: 1 MB
 - Cache L3: 8 MB
 
-### GPU's
+### GPUs
 
 **Nvidia GTX 980**
 
@@ -105,3 +105,11 @@ Las implementaciones realizadas, se ejecutaron de manera independiente en cada G
 
 
 ## Conclusiones:
+- El aceleramiento es más evidente cuando se requiere más procesamiento de los datos, esto podemos apreciarlo en los las graficas cuando comparamos los datos de entrada. A medida que el input aumenta su tamaño, el salto entre los tiempos de CPU y GPU es más notorio.
+- Cuando comparamos el rendimiento de las GPUs, vemos que la GTX980 es superior a la GTX780
+-
+-
+-
+-
+-
+-
