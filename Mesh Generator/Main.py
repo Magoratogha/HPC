@@ -1,4 +1,4 @@
-from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot
+#from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot
 from Distmesh2D import *
 import numpy as np
 
@@ -103,13 +103,13 @@ def example_3_online():
 
 # annulus, non-uniform
 def annulus():
-    figure()
+    #figure()
     pts, tri = distmesh2d(example2, annulus_h, 0.04, bbox, square)
     boundary = boundary_mask(pts, example2, 0.04)
     hold(True)
-    plot_mesh(pts, tri)
-    plot_nodes(pts, boundary)
-    show()
+    #plot_mesh(pts, tri)
+    #plot_nodes(pts, boundary)
+    #show()
 
 # a "star" built using circles
 def star_mesh():
