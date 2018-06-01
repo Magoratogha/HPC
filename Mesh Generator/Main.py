@@ -105,8 +105,8 @@ def example_3_online():
 def annulus():
     #figure()
     pts, tri = distmesh2d(example2, annulus_h, 0.04, bbox, square)
-    boundary = boundary_mask(pts, example2, 0.04)
-    hold(True)
+    #boundary = boundary_mask(pts, example2, 0.04)
+    #hold(True)
     #plot_mesh(pts, tri)
     #plot_nodes(pts, boundary)
     #show()
