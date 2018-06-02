@@ -1,6 +1,8 @@
 from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot
 from Distmesh2D import *
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 
 def example1(pts):
     return dcircle(pts, 0, 0, 1)
