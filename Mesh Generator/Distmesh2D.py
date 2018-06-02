@@ -121,12 +121,12 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         F = np.maximum(L0 - L, 0)
         Fvec = F * (barvec / L)
 
-        # Sum to get total forces for each point:
+        # Sum to get total forces for each point: =============================================================================
         Ftot[:] = 0
         for j in xrange(bars.shape[0]):
             Ftot[bars[j]] += [Fvec[j], -Fvec[j]]
 
-        # zero out forces at fixed points:
+        # zero out forces at fixed points:=====================================================================================
         Ftot[0:len(pfix), :] = 0.0
 
         # update point locations:
@@ -190,8 +190,12 @@ def boundary_mask(pts, fd, h0):
     geps = 0.01 * h0
     mask = np.zeros(N, dtype="bool")
     distance = fd(pts)
+    contador2 = 0
     for j in xrange(N):
         if distance[j] > -geps:
+            contador2 = contador2 +1
             mask[j] = True
+    print "zdfuiadufgaidugfidafug"
+    print contador2
 
     return mask

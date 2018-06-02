@@ -1,6 +1,7 @@
-from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot
+from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot, savefig
 from Distmesh2D import *
 import numpy as np
+from time import time
 
 def example1(pts):
     return dcircle(pts, 0, 0, 1)
@@ -66,9 +67,12 @@ def example_1b():
 # example 1c
 def example_1c():
     figure()
+    start_time = time()
     pts, tri = distmesh2d(example1, huniform, 0.1, bbox, [])
+    elapsed_time = time() - start_time
+    print("Tiempo de ejecucion: %0.10f seconds." % elapsed_time)
     plot_mesh(pts, tri)
-    show()
+    savefig('foo.png')
 
 # example 2
 def example_2():
@@ -147,4 +151,4 @@ def ell():
     plot_mesh(pts, tri)
     show()
 
-annulus()
+example_1c()
