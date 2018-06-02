@@ -72,7 +72,6 @@ def example_1c():
     elapsed_time = time() - start_time
     print("Tiempo de ejecucion: %0.10f seconds." % elapsed_time)
     plot_mesh(pts, tri)
-    savefig('foo.png')
 
 # example 2
 def example_2():
