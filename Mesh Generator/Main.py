@@ -151,4 +151,4 @@ def ell():
     plot_mesh(pts, tri)
     show()
 
-annulus()
+example_1c()
