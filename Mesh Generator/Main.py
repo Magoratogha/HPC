@@ -68,7 +68,7 @@ def example_1b():
 def example_1c():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(example1, huniform, 0.08, bbox, [])
+    pts, tri = distmesh2d(example1, huniform, 0.1, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
@@ -151,4 +151,4 @@ def ell():
     plot_mesh(pts, tri)
     show()
 
-example_1c()
+example_1a()

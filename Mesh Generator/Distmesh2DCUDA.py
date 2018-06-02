@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+import pycuda.driver as cuda
 import pycuda.autoinit
-import pycuda.driver as drv
+from pycuda.compiler import SourceModule
 import numpy as np
 from numpy import sqrt, sum, vstack
 
@@ -126,7 +127,6 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
 
         # Sum to get total forces for each point:
         Ftot[:] = 0
-        print bars
         for j in xrange(bars.shape[0]):
             Ftot[bars[j]] += [Fvec[j], -Fvec[j]]
 
