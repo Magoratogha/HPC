@@ -1,5 +1,5 @@
 from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot
-from Distmesh2D import *
+from Distmesh2DCUDA import *
 import numpy as np
 from time import time
 
