@@ -23,7 +23,7 @@ __global__ void totalforces(int *Fuerzas, int N)
 {
     const int i = threadIdx.x;
     if(i < N){
-        Fuerzas[i] = Fuerzas[i]+1
+        Fuerzas[i] = Fuerzas[i]+1;
     }
 }
 """)
