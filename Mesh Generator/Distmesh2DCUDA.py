@@ -9,7 +9,7 @@ from pycuda.compiler import SourceModule
 mod = SourceModule("""
 __global__ void boundary(bool *M, float *distance, int N, float geps)
 {
-    const int i = threadIdx.x;
+    const int i = threadIdx.x + blockDim.x * blockIdx.x;
     if(i < N){
         if(distance[i] > (-1)*geps){
             M[i] = true;
@@ -21,7 +21,7 @@ __global__ void boundary(bool *M, float *distance, int N, float geps)
 mod = SourceModule("""
 __global__ void totalforces(int *Fuerzas, int N)
 {
-    const int i = threadIdx.x;
+    const i = threadIdx.x + blockDim.x * blockIdx.x
     if(i < N){
         Fuerzas[i] = Fuerzas[i]+1;
     }
@@ -108,7 +108,7 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         totalforces = mod.get_function("totalforces")
         totalforces(
             drv.Out(Fuerzas), np.int32(puntos),
-            block=(int(puntos),1,1), grid=(1,1))
+            block=(32,32,1), grid=(np.ceil(float(puntos)/32,np.ceil(float(puntos)/32)))
         
         # Puntos fijos, fuerza = 0
         Ftot[0:len(pfix), :] = 0.0
@@ -180,6 +180,6 @@ def boundary_mask(pts, fd, h0):
     boundary = mod.get_function("boundary")
     boundary(
         drv.Out(mask), drv.In(distance), np.int32(N), np.float32(geps),
-        block=(int(N),1,1), grid=(1,1))
+        block=(32,32,1), grid=(np.ceil(float(N)/32,np.ceil(float(N)/32))
     
     return mask
