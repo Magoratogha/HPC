@@ -1,35 +1,35 @@
 from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot
+#from Distmesh2D import *
 from Distmesh2DCUDA import *
 import numpy as np
 from time import time
 
-def example1(pts):
+# Funciones distancia para diferentes formas: =================================
+
+def circulo(pts):
     return dcircle(pts, 0, 0, 1)
 
-def example2(pts):
+def circulohueco(pts):
     return ddiff(dcircle(pts, 0, 0, 0.7), dcircle(pts, 0, 0, 0.3))
 
-def example3(pts):
+def rectangulo(pts):
     return ddiff(drectangle(pts, -1, 1, -1, 1), dcircle(pts, 0, 0, 0.4))
 
-def example3_h(pts):
+def circuloconcentrado(pts):
     return np.minimum(4*np.sqrt(sum(pts**2, 1)) - 1, 2)
 
-def example3_online(pts):
-    return ddiff(drectangle(pts, -1, 1, -1, 1), dcircle(pts, 0, 0, 0.5))
+def circle_h(pts):
+    return 0.1 - circulo(pts)
 
-def example3_online_h(pts):
-    return 0.05 + 0.3 * dcircle(pts, 0, 0, 0.5)
-
-def annulus_h(pts):
+def annulus(pts):
     return 0.04 + 0.15 * dcircle(pts, 0, 0, 0.3)
 
-def star(pts):
+def estrella(pts):
     return dunion(dintersect(dcircle(pts, np.sqrt(3), 0, 2), dcircle(pts, -np.sqrt(3), 0, 2)),
                   dintersect(dcircle(pts, 0, np.sqrt(3), 2), dcircle(pts, 0, -np.sqrt(3), 2)))
 
-def circle_h(pts):
-    return 0.1 - example1(pts)
+
+# Funciones para graficar: =================================
 
 def plot_mesh(pts, tri, *args):
     if len(args) > 0:
@@ -42,139 +42,79 @@ def plot_mesh(pts, tri, *args):
 def plot_nodes(pts, mask, *args):
     boundary = pts[mask == True]
     interior = pts[mask == False]
-    plot(boundary[:,0], boundary[:,1], 'o', color="red")
-    plot(interior[:,0], interior[:,1], 'o', color="white")
+    plot(boundary[:,0], boundary[:,1], 'o', color="black")
+    plot(interior[:,0], interior[:,1], 'o', color="black")
     axis('tight')
     axes().set_aspect('equal')
+
 
 bbox = [[-1, 1], [-1, 1]]
 square = [[-1,-1], [-1,1], [1,-1], [1,1]]
 
-# example 1a
-def example_1a():
+# Definicion de los ejemplos: =================================
+
+# Circulo
+def Circulo():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(example1, huniform, 0.4, bbox, [])
+    pts, tri = distmesh2d(circulo, huniform, 0.3, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
     show()
 
-# example 1b
-def example_1b():
+# Circulo con hueco en el centro
+def CirculoConHueco():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(example1, huniform, 0.2, bbox, [])
+    pts, tri = distmesh2d(circulohueco, huniform, 0.1, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
     show()
 
-# example 1c
-def example_1c():
+
+# Cuadrado con circulo concentrado
+def CuadradoCirculoConcentrado():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(example1, huniform, 0.1, bbox, [])
+    pts, tri = distmesh2d(rectangulo, circuloconcentrado, 0.035, bbox, square)
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
     show()
 
-# example 2
-def example_2():
+
+# Circulo con malla no uniforme
+def CirculoNoUniforme():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(example2, huniform, 0.1, bbox, [])
+    pts, tri = distmesh2d(circulo, circle_h, 0.1, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
     show()
 
-# example 3a
-def example_3a():
-    figure()
-    start_time = time()
-    pts, tri = distmesh2d(example3, huniform, 0.15, bbox, square)
-    elapsed_time = time() - start_time
-    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    plot_mesh(pts, tri, example3(pts))
-    show()
 
-# example 3b
-def example_3b():
+# Annulus
+def Annulus():
     figure()
-    start_time = time()
-    pts, tri = distmesh2d(example3, example3_h, 0.035, bbox, square)
-    elapsed_time = time() - start_time
-    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    plot_mesh(pts, tri)
-    show()
-
-# example (current online version)
-def example_3_online():
-    figure()
-    start_time = time()
-    pts, tri = distmesh2d(example3_online, example3_online_h, 0.02, bbox, square)
-    boundary = boundary_mask(pts, example3_online, 0.02)
-    elapsed_time = time() - start_time
-    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    hold(True)
+    pts, tri = distmesh2d(circulohueco, annulus, 0.04, bbox, square)
+    boundary = boundary_mask(pts, circulohueco, 0.04)
     plot_mesh(pts, tri)
     plot_nodes(pts, boundary)
     show()
 
-# annulus, non-uniform
-def annulus():
+# Una estrella, usando circulos
+def Estrella():
     figure()
-    start_time = time()
-    pts, tri = distmesh2d(example2, annulus_h, 0.04, bbox, square)
-    boundary = boundary_mask(pts, example2, 0.04)
-    elapsed_time = time() - start_time
-    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    hold(True)
-    plot_mesh(pts, tri)
-    plot_nodes(pts, boundary)
-    show()
-
-# a "star" built using circles
-def star_mesh():
-    figure()
-    # fake the corners:
     pfix = [[0.25, 0.25], [-0.25, 0.25], [-0.25, -0.25], [0.25, -0.25]]
-    start_time = time()
-    pts, tri = distmesh2d(star, huniform, 0.1, bbox, pfix)
-    boundary = boundary_mask(pts, star, 0.5) # note how large h0 has to be here
-    print star(np.array(pfix))
-    elapsed_time = time() - start_time
-    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    hold(True)
+    pts, tri = distmesh2d(estrella, huniform, 0.1, bbox, pfix)
+    boundary = boundary_mask(pts, estrella, 0.5)
     plot_mesh(pts, tri)
     plot_nodes(pts, boundary)
     show()
 
-# a circle, finer mesh near the boundary
-def circle_nonuniform():
-    figure()
-    # fake the corners:
-    start_time = time()
-    pts, tri = distmesh2d(example1, circle_h, 0.1, bbox, [])
-    elapsed_time = time() - start_time
-    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    plot_mesh(pts, tri)
-    show()
 
-def ell():
-    """L-shaped domain from 'Finite Elements and Fast Iterative Solvers'
-    by Elman, Silvester, and Wathen."""
-    pfix = [[1,1], [1, -1], [0, -1], [0, 0], [-1, 0], [-1, 1]]
-    def d(pts):
-        return ddiff(drectangle(pts, -1, 1, -1, 1), drectangle(pts, -2, 0, -2, 0))
-    figure()
-    start_time = time()
-    pts, tri = distmesh2d(d, huniform, 0.1, bbox, pfix)
-    elapsed_time = time() - start_time
-    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    plot_mesh(pts, tri)
-    show()
-
-example_1a()
+# Ejecucion: =================================
+Annulus()
