@@ -20,18 +20,6 @@ except:
         return tri
 
 
-mod = SourceModule("""
-  __global__ void TotalForces(float *Ftot, float *bars, float *Fvec, int n)
-  {
-    int idx = threadIdx.x + threadIdx.y*4;
-
-    if(idx < n){
-        Ftot[bars[idx]] += [Fvec[idx], -Fvec[idx]]
-    }
-  }
-  """)
-
-
 def fixmesh(pts, tri):
     # find doubles
     doubles = []
@@ -140,13 +128,8 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
 
         # Sum to get total forces for each point: ===============================================================
         Ftot[:] = 0
-        n = bars.shape[0]        
-
-        func = mod.get_function("TotalForces")
-        func(cuda.InOut(Ftot), cuda.In(bars), cuda.In(Fvec), n, block=(np.ceil(n/256.0),256,1))
-
-        """for j in xrange(bars.shape[0]):
-            Ftot[bars[j]] += [Fvec[j], -Fvec[j]]"""
+        for j in xrange(bars.shape[0]):
+            Ftot[bars[j]] = Ftot[bars[j]] + [Fvec[j], Fvec[j]*(-1)]
 
         # zero out forces at fixed points: ======================================================================
         Ftot[0:len(pfix), :] = 0.0
