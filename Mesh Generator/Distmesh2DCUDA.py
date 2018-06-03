@@ -12,7 +12,7 @@ __global__ void boundary(bool *M, float *distance, int N, float geps)
   const int i = threadIdx.x;
   if(i < N){
     if(distance[i] > (-1)*geps){
-        M[j] = True;
+        M[i] = true;
     }
   }
 }
