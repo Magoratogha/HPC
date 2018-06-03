@@ -19,21 +19,6 @@ except:
         _, _, tri, _ = md.delaunay(pts[:,0], pts[:,1])
         return tri
 
-mod = SourceModule("""
-
-    #include <iostream>
-    #include <vector>
-    using namespace std;
-
-    __global__ void TotalForces(vector<float> *Ftot, vector<float> *bars, vector<float> *Fvec, int n){
-        
-        int idx = threadIdx.x + threadIdx.y*32;
-        if(idx < n){
-            int i = bars[idx];
-            Ftot[i].push_back({Fvec[idx], (-1)*Fvec[idx]});
-        }
-    }
-""")
 
 def distmesh2d(fd, fh, h0, bbox, pfix, *args):
     """A re-implementation of the MATLAB distmesh2d function by Persson and Strang.
@@ -110,8 +95,8 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
 
         # Sum to get total forces for each point: ===============================================================
         Ftot[:] = 0
-        func = mod.get_function("TotalForces")
-        func(cuda.InOut(Ftot), cuda.In(bars), cuda.In(Fvec), cuda.In(bars.shape[0]), block=(bars.shape[0],1,1))
+        for j in xrange(bars.shape[0]):
+            Ftot[bars[j]] = Ftot[bars[j]] + [Fvec[j], Fvec[j]*(-1)]
 
         # zero out forces at fixed points: ======================================================================
         Ftot[0:len(pfix), :] = 0.0
