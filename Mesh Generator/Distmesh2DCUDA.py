@@ -20,7 +20,7 @@ except:
         return tri
 
 mod = SourceModule("""
-  __global__ void TotalForces(float *Ftot, float *bars, float *Fvec, int n)
+  __global__ void TotalForces(std::vector<float> *Ftot, std::vector<float> *bars, std::vector<float> *Fvec, int n)
   {
     int idx = threadIdx.x + threadIdx.y*32;
     if(idx < n){
