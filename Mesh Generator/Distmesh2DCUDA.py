@@ -131,7 +131,7 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         for j in xrange(bars.shape[0]):
             Ftot[bars[j]] = Ftot[bars[j]] + [Fvec[j], Fvec[j]*(-1)]
 
-        print Ftot
+        print str(Ftot)
         print "=============================="
         # zero out forces at fixed points: ======================================================================
         Ftot[0:len(pfix), :] = 0.0
