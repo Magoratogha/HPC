@@ -161,7 +161,7 @@ def boundary_mask(pts, fd, h0):
     distance = fd(pts)
     boundary = mod.get_function("boundary")
     boundary(
-        drv.Out(mask), drv.In(distance), int(N), geps,
+        drv.Out(mask), drv.In(distance), numpy.int32(N), numpy.float32(geps),
         block=(int(N),1,1), grid=(1,1))
     
     return mask
