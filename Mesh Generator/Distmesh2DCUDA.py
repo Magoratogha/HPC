@@ -162,6 +162,6 @@ def boundary_mask(pts, fd, h0):
     boundary = mod.get_function("boundary")
     boundary(
         drv.Out(mask), drv.In(distance), drv.In(N), drv.In(geps),
-        block=(N,1,1), grid=(1,1))
+        block=(int(N),1,1), grid=(1,1))
     
     return mask
