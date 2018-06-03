@@ -24,8 +24,8 @@ mod = SourceModule("""
   {
     int idx = threadIdx.x + threadIdx.y*32;
     if(idx < n){
-        int i = bars[j];
-        Ftot[i].push_back({Fvec[j], (-1)*Fvec[j]});
+        int i = bars[idx];
+        Ftot[i].push_back({Fvec[idx], (-1)*Fvec[idx]});
     }
   }
   """)
