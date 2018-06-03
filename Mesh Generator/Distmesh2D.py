@@ -39,6 +39,8 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
     x, y = np.meshgrid(np.arange(bbox[0][0], bbox[0][1], h0), np.arange(bbox[1][0], bbox[1][1], h0*sqrt(3)/2))
     x[1::2,:] += h0/2
     p = np.array((x.flatten(), y.flatten())).T
+    puntos = len(p)
+    Fuerzas = np.zeros_like(p)
 
     # Descartar puntos exteriores
     p = p[fd(p, *args) < geps]
@@ -71,11 +73,15 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         F = np.maximum(L0 - L, 0)
         Fvec = F * (barvec / L)
 
-        # Suma para obtener fuerzas totales para cada punto
         Ftot[:] = 0
         for j in xrange(bars.shape[0]):
             Ftot[bars[j]] += [Fvec[j], -Fvec[j]]
 
+        # Suma para obtener fuerzas totales para cada punto
+        Fuerzas[:] = 0
+        for u in xrange(puntos):
+            Fuerzas[u] += 1
+        
         # Puntos fijos, fuerza = 0
         Ftot[0:len(pfix), :] = 0.0
 
@@ -138,7 +144,6 @@ def boundary_mask(pts, fd, h0):
     h0: Parametro de tam. del elemento
 
     """
-
     N = pts.shape[0]
     geps = 0.01 * h0
     mask = np.zeros(N, dtype="bool")

@@ -9,12 +9,22 @@ from pycuda.compiler import SourceModule
 mod = SourceModule("""
 __global__ void boundary(bool *M, float *distance, int N, float geps)
 {
-  const int i = threadIdx.x;
-  if(i < N){
-    if(distance[i] > (-1)*geps){
-        M[i] = true;
+    const int i = threadIdx.x;
+    if(i < N){
+        if(distance[i] > (-1)*geps){
+            M[i] = true;
+        }
     }
-  }
+}
+""")
+
+mod = SourceModule("""
+__global__ void totalforces(int *Fuerzas, int N)
+{
+    const int i = threadIdx.x;
+    if(i < N){
+        Fuerzas[i] = Fuerzas[i]+1
+    }
 }
 """)
 
@@ -55,6 +65,8 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
     x, y = np.meshgrid(np.arange(bbox[0][0], bbox[0][1], h0), np.arange(bbox[1][0], bbox[1][1], h0*sqrt(3)/2))
     x[1::2,:] += h0/2
     p = np.array((x.flatten(), y.flatten())).T
+    puntos = len(p)
+    Fuerzas = np.zeros_like(p)
 
     # Descartar puntos exteriores
     p = p[fd(p, *args) < geps]
@@ -87,11 +99,17 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         F = np.maximum(L0 - L, 0)
         Fvec = F * (barvec / L)
 
-        # Suma para obtener fuerzas totales para cada punto
         Ftot[:] = 0
         for j in xrange(bars.shape[0]):
             Ftot[bars[j]] += [Fvec[j], -Fvec[j]]
 
+        # Suma para obtener fuerzas totales para cada punto
+        Fuerzas[:] = 0
+        totalforces = mod.get_function("totalforces")
+        totalforces(
+            drv.Out(Fuerzas), np.int32(puntos),
+            block=(int(N),1,1), grid=(1,1))
+        
         # Puntos fijos, fuerza = 0
         Ftot[0:len(pfix), :] = 0.0
 

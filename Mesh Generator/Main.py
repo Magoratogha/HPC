@@ -1,6 +1,6 @@
 from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot
-#from Distmesh2D import *
-from Distmesh2DCUDA import *
+from Distmesh2D import *
+#from Distmesh2DCUDA import *
 import numpy as np
 from time import time
 
@@ -99,8 +99,11 @@ def CirculoNoUniforme():
 # Annulus
 def Annulus():
     figure()
+    start_time = time()
     pts, tri = distmesh2d(circulohueco, annulus, 0.04, bbox, square)
     boundary = boundary_mask(pts, circulohueco, 0.04)
+    elapsed_time = time() - start_time
+    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
     plot_nodes(pts, boundary)
     show()
@@ -108,9 +111,12 @@ def Annulus():
 # Una estrella, usando circulos
 def Estrella():
     figure()
+    start_time = time()
     pfix = [[0.25, 0.25], [-0.25, 0.25], [-0.25, -0.25], [0.25, -0.25]]
     pts, tri = distmesh2d(estrella, huniform, 0.1, bbox, pfix)
     boundary = boundary_mask(pts, estrella, 0.5)
+    elapsed_time = time() - start_time
+    print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
     plot_nodes(pts, boundary)
     show()
