@@ -7,7 +7,7 @@ from numpy import sqrt, sum, vstack
 
 
 __all__ = ["distmesh2d", "dcircle", "drectangle", "ddiff",
-           "dintersect", "dunion", "huniform", "fixmesh", "boundary_mask"]
+           "dintersect", "dunion", "huniform", "boundary_mask"]
 
 try:
     from scipy.spatial import Delaunay
@@ -19,39 +19,16 @@ except:
         _, _, tri, _ = md.delaunay(pts[:,0], pts[:,1])
         return tri
 
-
-def fixmesh(pts, tri):
-    # find doubles
-    doubles = []
-    N = pts.shape[0]
-    for i in xrange(N):
-        for j in xrange(i+1,N):
-            if np.linalg.norm(pts[i] - pts[j]) == 0:
-                doubles.append(j)
-
-    # remove doubles
-    while len(doubles) > 0:
-        j = doubles.pop()
-
-        # remove a double
-        pts = np.vstack([pts[0:j], pts[j+1:]])
-
-        # update all triangles that reference points after the one removed
-        for k in xrange(tri.shape[0]):
-            for l in xrange(3):
-                if tri[k, l] > j:
-                    tri[k, l] -= 1
-
-    # check (and fix) node order in triangles
-    for k in xrange(tri.shape[0]):
-        a = pts[tri[k, 0]]
-        b = pts[tri[k, 1]]
-        c = pts[tri[k, 2]]
-
-        if np.cross(b - a, c - a) > 0:
-            tri[k, 2], tri[k, 1] = tri[k, 1], tri[k, 2]
-
-    return pts, tri
+mod = SourceModule("""
+  __global__ void TotalForces(float *Ftot, float *bars, float *Fvec, int n)
+  {
+    int idx = threadIdx.x + threadIdx.y*32;
+    if(idx < n){
+        int i = bars[j];
+        Ftot[i].push_back({Fvec[j], (-1)*Fvec[j]});
+    }
+  }
+  """)
 
 def distmesh2d(fd, fh, h0, bbox, pfix, *args):
     """A re-implementation of the MATLAB distmesh2d function by Persson and Strang.
@@ -128,11 +105,9 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
 
         # Sum to get total forces for each point: ===============================================================
         Ftot[:] = 0
-        for j in xrange(bars.shape[0]):
-            Ftot[bars[j]] = Ftot[bars[j]] + [Fvec[j], Fvec[j]*(-1)]
+        func = mod.get_function("TotalForces")
+        func(cuda.InOut(Ftot), cuda.In(bars), cuda.In(Fvec), cuda.In(bars.shape[0]), block=(bars.shape[0],1,1))
 
-        print str(Ftot)
-        print "=============================="
         # zero out forces at fixed points: ======================================================================
         Ftot[0:len(pfix), :] = 0.0
 
