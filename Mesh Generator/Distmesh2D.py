@@ -39,7 +39,7 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
     x, y = np.meshgrid(np.arange(bbox[0][0], bbox[0][1], h0), np.arange(bbox[1][0], bbox[1][1], h0*sqrt(3)/2))
     x[1::2,:] += h0/2
     p = np.array((x.flatten(), y.flatten())).T
-    puntos = int(len(p)/dptol)
+    puntos = len(p)*100
     Fuerzas = np.zeros(puntos)
 
     # Descartar puntos exteriores
