@@ -7,6 +7,16 @@ import pycuda.driver as drv
 from pycuda.compiler import SourceModule
 
 mod = SourceModule("""
+
+__global__ void totalforces(int *Fuerzas, int N)
+{
+    const int i = threadIdx.x + blockDim.x * blockIdx.x;
+    if(i < N){
+        Fuerzas[i] = Fuerzas[i]+1;
+    }
+}
+
+
 __global__ void boundary(bool *M, float *distance, int N, float geps)
 {
     const int i = threadIdx.x + blockDim.x * blockIdx.x;
@@ -14,16 +24,6 @@ __global__ void boundary(bool *M, float *distance, int N, float geps)
         if(distance[i] > (-1)*geps){
             M[i] = true;
         }
-    }
-}
-""")
-
-mod = SourceModule("""
-__global__ void totalforces(int *Fuerzas, int N)
-{
-    const int i = threadIdx.x + blockDim.x * blockIdx.x;
-    if(i < N){
-        Fuerzas[i] = Fuerzas[i]+1;
     }
 }
 """)
