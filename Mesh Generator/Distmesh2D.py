@@ -32,14 +32,14 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
     """
 
     # Constantes
-    dptol = 0.001; ttol = 0.1; Fscale = 1.2; deltat = 0.2;
+    dptol = 0.001; ttol = 0.1; Fscale = 1.2; deltat = 0.2; dpscale = 100;
     geps = 0.001 * h0; deps = sqrt(np.finfo(float).eps) * h0
 
     # Distribucion inicial de los puntos
     x, y = np.meshgrid(np.arange(bbox[0][0], bbox[0][1], h0), np.arange(bbox[1][0], bbox[1][1], h0*sqrt(3)/2))
     x[1::2,:] += h0/2
     p = np.array((x.flatten(), y.flatten())).T
-    puntos = len(p)*100
+    puntos = len(p)*dpscale
     Fuerzas = np.zeros(puntos)
 
     # Descartar puntos exteriores

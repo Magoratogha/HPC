@@ -57,11 +57,11 @@ square = [[-1,-1], [-1,1], [1,-1], [1,1]]
 def Circulo():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(circulo, huniform, 0.1, bbox, [])
+    pts, tri = distmesh2d(circulo, huniform, 0.08, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    #plot_mesh(pts, tri)
-    #show()
+    plot_mesh(pts, tri)
+    show()
 
 # Circulo con hueco en el centro
 def CirculoConHueco():
