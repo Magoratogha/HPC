@@ -10,7 +10,7 @@ mod = SourceModule("""
 
 __global__ void totalforces(int *Fuerzas, int N, int Fscale)
 {
-    const int i = threadIdx.x + blockDim.x * blockIdx.x;
+    const int i = threadIdx.x+32*blockIdx.x;
     if(i < N){
         Fuerzas[i] = Fuerzas[i]+Fscale*i;
     }
@@ -19,7 +19,7 @@ __global__ void totalforces(int *Fuerzas, int N, int Fscale)
 
 __global__ void boundary(bool *M, float *distance, int N, float geps)
 {
-    const int i = threadIdx.x + blockDim.x * blockIdx.x;
+    const int i = threadIdx.x + 32* blockIdx.x;
     if(i < N){
         if(distance[i] > (-1)*geps){
             M[i] = true;
