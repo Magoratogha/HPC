@@ -40,7 +40,7 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
     x[1::2,:] += h0/2
     p = np.array((x.flatten(), y.flatten())).T
     puntos = int(len(p)/dptol)
-    Fuerzas = np.zeros_like(p)
+    Fuerzas = np.zeros(puntos)
 
     # Descartar puntos exteriores
     p = p[fd(p, *args) < geps]
