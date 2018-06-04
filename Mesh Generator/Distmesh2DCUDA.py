@@ -107,7 +107,7 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         Fuerzas[:] = 0
         totalforces = mod.get_function("totalforces")
         totalforces(
-            drv.Out(Fuerzas), np.int32(puntos), np.int32(Fscale)
+            drv.Out(Fuerzas), np.int32(puntos), np.int32(Fscale),
             block=(32,32,1), grid=(int(np.ceil(puntos/32.0)),int(np.ceil(puntos/32.0))))
         
         # Puntos fijos, fuerza = 0
