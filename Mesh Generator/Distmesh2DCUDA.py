@@ -108,7 +108,7 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         totalforces = mod.get_function("totalforces")
         totalforces(
             drv.Out(Fuerzas), np.int32(puntos),
-            block=(32,32,1), grid=(np.ceil(float(puntos)/32),np.ceil(float(puntos)/32)))
+            block=(32,32,1), grid=(np.ceil(puntos/32.0),np.ceil(puntos/32.0)))
         
         # Puntos fijos, fuerza = 0
         Ftot[0:len(pfix), :] = 0.0
@@ -180,6 +180,6 @@ def boundary_mask(pts, fd, h0):
     boundary = mod.get_function("boundary")
     boundary(
         drv.Out(mask), drv.In(distance), np.int32(N), np.float32(geps),
-        block=(32,32,1), grid=(np.ceil(float(N)/32),np.ceil(float(N)/32)))
+        block=(32,32,1), grid=(np.ceil(N/32.0),np.ceil(N/32.0)))
     
     return mask
