@@ -57,7 +57,7 @@ square = [[-1,-1], [-1,1], [1,-1], [1,1]]
 def Circulo():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(circulo, huniform, 0.3, bbox, [])
+    pts, tri = distmesh2d(circulo, huniform, 0.1, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
@@ -67,7 +67,7 @@ def Circulo():
 def CirculoConHueco():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(circulohueco, huniform, 0.1, bbox, [])
+    pts, tri = distmesh2d(circulohueco, huniform, 0.4, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
@@ -123,4 +123,4 @@ def Estrella():
 
 
 # Ejecucion: =================================
-Annulus()
+Circulo()

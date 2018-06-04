@@ -8,11 +8,11 @@ from pycuda.compiler import SourceModule
 
 mod = SourceModule("""
 
-__global__ void totalforces(int *Fuerzas, int N)
+__global__ void totalforces(int *Fuerzas, int N, int Fscale)
 {
     const int i = threadIdx.x + blockDim.x * blockIdx.x;
     if(i < N){
-        Fuerzas[i] = Fuerzas[i]+1;
+        Fuerzas[i] = Fuerzas[i]+Fscale*i;
     }
 }
 
@@ -107,7 +107,7 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         Fuerzas[:] = 0
         totalforces = mod.get_function("totalforces")
         totalforces(
-            drv.Out(Fuerzas), np.int32(puntos),
+            drv.Out(Fuerzas), np.int32(puntos), np.int32(Fscale)
             block=(32,32,1), grid=(int(np.ceil(puntos/32.0)),int(np.ceil(puntos/32.0))))
         
         # Puntos fijos, fuerza = 0

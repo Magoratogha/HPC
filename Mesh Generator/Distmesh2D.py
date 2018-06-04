@@ -70,17 +70,16 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         L0 = hbars*Fscale*sqrt(sum(L**2) / sum(hbars**2))
 
         # Calcular fuerza por cada arista
+        Ftot[:] = 0
         F = np.maximum(L0 - L, 0)
         Fvec = F * (barvec / L)
-
-        Ftot[:] = 0
         for j in xrange(bars.shape[0]):
             Ftot[bars[j]] += [Fvec[j], -Fvec[j]]
 
         # Suma para obtener fuerzas totales para cada punto
         Fuerzas[:] = 0
         for u in xrange(puntos):
-            Fuerzas[u] += 1
+            Fuerzas[u] += Fscale*u
         
         # Puntos fijos, fuerza = 0
         Ftot[0:len(pfix), :] = 0.0
