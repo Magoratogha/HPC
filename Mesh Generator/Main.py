@@ -61,7 +61,7 @@ def Circulo():
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     plot_mesh(pts, tri)
-    show()
+    #show()
 
 # Circulo con hueco en el centro
 def CirculoConHueco():
