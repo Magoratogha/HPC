@@ -78,11 +78,11 @@ def CirculoConHueco():
 def CuadradoCirculoConcentrado():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(rectangulo, circuloconcentrado, 0.1, bbox, square)
+    pts, tri = distmesh2d(rectangulo, circuloconcentrado, 0.035, bbox, square)
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    plot_mesh(pts, tri)
-    show()
+    #plot_mesh(pts, tri)
+    #show()
 
 
 # Circulo con malla no uniforme
@@ -123,4 +123,4 @@ def Estrella():
 
 
 # Ejecucion: =================================
-CuadradoCirculoConcentrado()
+Circulo()

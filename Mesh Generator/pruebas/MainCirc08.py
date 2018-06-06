@@ -1,6 +1,6 @@
 from pylab import figure, triplot, tripcolor, axis, axes, show, hold, plot
-#from Distmesh2D import *
-from Distmesh2DCUDA import *
+from Distmesh2D import *
+#from Distmesh2DCUDA import *
 import numpy as np
 from time import time
 
@@ -57,7 +57,7 @@ square = [[-1,-1], [-1,1], [1,-1], [1,1]]
 def Circulo():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(circulo, huniform, 0.6, bbox, [])
+    pts, tri = distmesh2d(circulo, huniform, 0.08, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     #plot_mesh(pts, tri)
@@ -67,7 +67,7 @@ def Circulo():
 def CirculoConHueco():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(circulohueco, huniform, 0.4, bbox, [])
+    pts, tri = distmesh2d(circulohueco, huniform, 0.1, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     #plot_mesh(pts, tri)
@@ -124,6 +124,3 @@ def Estrella():
 
 # Ejecucion: =================================
 Circulo()
-Annulus()
-CuadradoCirculoConcentrado()
-Estrella()

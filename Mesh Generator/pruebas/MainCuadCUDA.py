@@ -123,7 +123,4 @@ def Estrella():
 
 
 # Ejecucion: =================================
-Circulo()
-Annulus()
 CuadradoCirculoConcentrado()
-Estrella()

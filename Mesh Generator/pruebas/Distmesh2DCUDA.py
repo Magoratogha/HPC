@@ -2,7 +2,33 @@
 import numpy as np
 from numpy import sqrt, sum, vstack
 from scipy.spatial import Delaunay
-    
+import pycuda.autoinit
+import pycuda.driver as drv
+from pycuda.compiler import SourceModule
+
+mod = SourceModule("""
+
+__global__ void totalforces(int *Fuerzas, int N, int Fscale)
+{
+    const int i = threadIdx.x+32*blockIdx.x;
+    if(i < N){
+        Fuerzas[i] = Fuerzas[i]+Fscale*i;
+    }
+}
+
+
+__global__ void boundary(bool *M, float *distance, int N, float geps)
+{
+    const int i = threadIdx.x + 32* blockIdx.x;
+    if(i < N){
+        if(distance[i] > (-1)*geps){
+            M[i] = true;
+        }
+    }
+}
+""")
+
+
 def delaunay(pts):
     return Delaunay(pts).vertices
 
@@ -70,16 +96,19 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
         L0 = hbars*Fscale*sqrt(sum(L**2) / sum(hbars**2))
 
         # Calcular fuerza por cada arista
-        Ftot[:] = 0
         F = np.maximum(L0 - L, 0)
         Fvec = F * (barvec / L)
+
+        Ftot[:] = 0
         for j in xrange(bars.shape[0]):
             Ftot[bars[j]] += [Fvec[j], -Fvec[j]]
 
         # Suma para obtener fuerzas totales para cada punto
         Fuerzas[:] = 0
-        for u in xrange(puntos):
-            Fuerzas[u] += Fscale*u
+        totalforces = mod.get_function("totalforces")
+        totalforces(
+            drv.Out(Fuerzas), np.int32(puntos), np.int32(Fscale),
+            block=(32,1,1), grid=(int(np.ceil(puntos/32.0)),1))
         
         # Puntos fijos, fuerza = 0
         Ftot[0:len(pfix), :] = 0.0
@@ -143,12 +172,14 @@ def boundary_mask(pts, fd, h0):
     h0: Parametro de tam. del elemento
 
     """
+
     N = pts.shape[0]
     geps = 0.01 * h0
     mask = np.zeros(N, dtype="bool")
     distance = fd(pts)
-    for j in xrange(N):
-        if distance[j] > -geps:
-            mask[j] = True
-
+    boundary = mod.get_function("boundary")
+    boundary(
+        drv.Out(mask), drv.In(distance), np.int32(N), np.float32(geps),
+        block=(32,1,1), grid=(int(np.ceil(N/32.0)),1))
+    
     return mask
