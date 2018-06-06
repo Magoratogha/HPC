@@ -117,10 +117,10 @@ def Estrella():
     boundary = boundary_mask(pts, estrella, 0.5)
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    #plot_mesh(pts, tri)
-    #plot_nodes(pts, boundary)
-    #show()
+    plot_mesh(pts, tri)
+    plot_nodes(pts, boundary)
+    show()
 
 
 # Ejecucion: =================================
-CirculoConHueco()
+Estrella()
