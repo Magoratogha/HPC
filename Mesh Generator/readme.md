@@ -10,7 +10,7 @@ Dependencias:
 - NumPy
 - Matplotlib
 
-Para su ejecución: 
+### Para su ejecución: 
 ~~~
 python Main.py
 ~~~
