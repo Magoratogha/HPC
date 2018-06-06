@@ -77,9 +77,9 @@ def distmesh2d(fd, fh, h0, bbox, pfix, *args):
             Ftot[bars[j]] += [Fvec[j], -Fvec[j]]
 
         # Suma para obtener fuerzas totales para cada punto
-        Fuerzas[:] = 0
-        for u in xrange(puntos):
-            Fuerzas[u] += Fscale*u
+        #Fuerzas[:] = 0
+        #for u in xrange(puntos):
+         #   Fuerzas[u] += Fscale*u
         
         # Puntos fijos, fuerza = 0
         Ftot[0:len(pfix), :] = 0.0

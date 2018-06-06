@@ -16,24 +16,9 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia-390
 
 export CUDA_VISIBLE_DEVICES=0
 
+echo prueba secuencial
 python Main.py
 python Main.py
-python Main.py
-python Main.py
-python Main.py
-python Main.py
-python Main.py
-python Main.py
-python Main.py
-python Main.py
-echo
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
+echo prueba paralelo
 python MainCUDA.py
 python MainCUDA.py
