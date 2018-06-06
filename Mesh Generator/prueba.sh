@@ -21,17 +21,7 @@ python Main.py
 python Main.py
 python Main.py
 python Main.py
-python Main.py
-python Main.py
-python Main.py
-python Main.py
-python Main.py
 echo
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
-python MainCUDA.py
 python MainCUDA.py
 python MainCUDA.py
 python MainCUDA.py
