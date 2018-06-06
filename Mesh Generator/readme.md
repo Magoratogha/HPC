@@ -1,6 +1,6 @@
 ## **Generador de mallado para problemas de metodo de elementos finitos**
 
-Implementación del algoritmo de "Distmesh" en python usando PyCUDA, SciPy, NumPy y Matplotlib.
+Implementación del algoritmo de "Distmesh" en Python usando PyCUDA, SciPy, NumPy y Matplotlib.
 
 Dependencias:
 
