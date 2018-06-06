@@ -57,7 +57,7 @@ square = [[-1,-1], [-1,1], [1,-1], [1,1]]
 def Circulo():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(circulo, huniform, 0.2, bbox, [])
+    pts, tri = distmesh2d(circulo, huniform, 0.6, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
     #plot_mesh(pts, tri)
@@ -70,8 +70,8 @@ def CirculoConHueco():
     pts, tri = distmesh2d(circulohueco, huniform, 0.1, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    plot_mesh(pts, tri)
-    show()
+    #plot_mesh(pts, tri)
+    #show()
 
 
 # Cuadrado con circulo concentrado
@@ -117,10 +117,10 @@ def Estrella():
     boundary = boundary_mask(pts, estrella, 0.5)
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    plot_mesh(pts, tri)
-    plot_nodes(pts, boundary)
-    show()
+    #plot_mesh(pts, tri)
+    #plot_nodes(pts, boundary)
+    #show()
 
 
 # Ejecucion: =================================
-Estrella()
+Circulo()
