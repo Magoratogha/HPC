@@ -57,11 +57,11 @@ square = [[-1,-1], [-1,1], [1,-1], [1,1]]
 def Circulo():
     figure()
     start_time = time()
-    pts, tri = distmesh2d(circulo, huniform, 0.1, bbox, [])
+    pts, tri = distmesh2d(circulo, huniform, 0.4, bbox, [])
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    #plot_mesh(pts, tri)
-    #show()
+    plot_mesh(pts, tri)
+    show()
 
 # Circulo con hueco en el centro
 def CirculoConHueco():
@@ -81,8 +81,8 @@ def CuadradoCirculoConcentrado():
     pts, tri = distmesh2d(rectangulo, circuloconcentrado, 0.035, bbox, square)
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    #plot_mesh(pts, tri)
-    #show()
+    plot_mesh(pts, tri)
+    show()
 
 
 # Circulo con malla no uniforme
@@ -104,9 +104,9 @@ def Annulus():
     boundary = boundary_mask(pts, circulohueco, 0.04)
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    #plot_mesh(pts, tri)
-    #plot_nodes(pts, boundary)
-    #show()
+    plot_mesh(pts, tri)
+    plot_nodes(pts, boundary)
+    show()
 
 # Una estrella, usando circulos
 def Estrella():
@@ -117,10 +117,10 @@ def Estrella():
     boundary = boundary_mask(pts, estrella, 0.5)
     elapsed_time = time() - start_time
     print("Tiempo ejecucion: %0.10f segundos." % elapsed_time)
-    #plot_mesh(pts, tri)
-    #plot_nodes(pts, boundary)
-    #show()
+    plot_mesh(pts, tri)
+    plot_nodes(pts, boundary)
+    show()
 
 
 # Ejecucion: =================================
-Annulus()
+Circulo()
