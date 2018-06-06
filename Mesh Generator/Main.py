@@ -124,4 +124,3 @@ def Estrella():
 
 # Ejecucion: =================================
 Circulo()
-CuadradoCirculoConcentrado()
